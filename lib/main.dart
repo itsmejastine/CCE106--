@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/loginPage.dart';
 import 'package:flutter_it14proj/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +19,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: mobileBackgroundColor,
         useMaterial3: true,
+      //  textTheme: GoogleFonts.inter(Theme.of(context).textTheme.displaySmall)
+      
       ),
       home: const LoginPage(),
     );
