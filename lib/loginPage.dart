@@ -13,71 +13,91 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Container(
-              width: 196,
-              height: 102,
-              child: const Image(image: AssetImage("lib/images/logo.png")),
-            ),
-          ),
-          Text(
-            'WELCOME',
-            style: GoogleFonts.daysOne(
-              textStyle: Theme.of(context).textTheme.displayMedium,
-              fontSize: 32,
-              color: primaryWhite,
-            ),
-          ),
-          Text(
-            'COMPANION',
-            style: GoogleFonts.daysOne(
-              textStyle: Theme.of(context).textTheme.displayMedium,
-              fontSize: 32,
-              color: primaryWhite,
-            ),
-          ),
-          Text(
-            '“Accumulate savings effortlessly, without the need for conscious effort. “',
-            style: GoogleFonts.inter(
-              textStyle: Theme.of(context).textTheme.displaySmall,
-              fontSize: 16,
-              color: primaryWhite,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  "LOGIN",
-                  style: TextStyle(color: primaryWhite),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: primaryGreen,
-                  elevation: 0,
-                ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 74, 16, 74),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Container(
+                width: 196,
+                height: 102,
+                child: const Image(image: AssetImage("lib/images/logo.png")),
               ),
-              OutlinedButton(
-                onPressed: () {},
-                child: Text(
-                  "Register",
-                  style: TextStyle(color: primaryWhite),
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+            Text(
+              'WELCOME',
+              style: GoogleFonts.daysOne(
+                textStyle: Theme.of(context).textTheme.displayMedium,
+                fontSize: 32,
+                color: primaryWhite,
+              ),
+            ),
+            Text(
+              'COMPANION',
+              style: GoogleFonts.daysOne(
+                textStyle: Theme.of(context).textTheme.displayMedium,
+                fontSize: 32,
+                color: primaryWhite,
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              '“Accumulate savings effortlessly, without the need for conscious effort. “',
+              style: GoogleFonts.inter(
+                textStyle: Theme.of(context).textTheme.displaySmall,
+                fontSize: 16,
+                color: primaryWhite,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "LOGIN",
+                    style: TextStyle(color: primaryWhite),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryGreen,
+                    elevation: 0,
+                  ),
                 ),
-                style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: primaryGreen)),
-              )
-            ],
-          ),
-          const Text(
-            "© Almonte & Villacis 2023",
-            style: TextStyle(color: primaryWhite),
-          )
-        ],
+                const SizedBox(
+                  width: 6,
+                ),
+                OutlinedButton(
+                  height:
+                  onPressed: () {},
+                  child: Text(
+                    "Register",
+                    style: TextStyle(color: primaryGreen),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: primaryGreen)),
+                )
+              ],
+            ),
+            const Text(
+              "© Almonte & Villacis 2023",
+              style: GoogleFonts.inter(
+                textStyle: Theme.of(context).textTheme.displaySmall,
+                fontSize: 8,
+                color: primaryWhite,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
