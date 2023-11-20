@@ -62,39 +62,45 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    "LOGIN",
-                    style: TextStyle(color: primaryWhite),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryGreen,
-                    elevation: 0,
+                SizedBox(
+                  height: 48,
+                  width: 170,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      "LOGIN",
+                      style: TextStyle(color: primaryWhite),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryGreen,
+                      elevation: 0,
+                    ),
                   ),
                 ),
                 const SizedBox(
                   width: 6,
                 ),
-                OutlinedButton(
-                  height:
-                  onPressed: () {},
-                  child: Text(
-                    "Register",
-                    style: TextStyle(color: primaryGreen),
+                SizedBox(
+                  height: 48,
+                  width: 170,
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Register",
+                      style: TextStyle(color: primaryGreen),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: primaryGreen)),
                   ),
-                  style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: primaryGreen)),
                 )
               ],
             ),
+            const SizedBox(
+              height: 200,
+            ),
             const Text(
               "© Almonte & Villacis 2023",
-              style: GoogleFonts.inter(
-                textStyle: Theme.of(context).textTheme.displaySmall,
-                fontSize: 8,
-                color: primaryWhite,
-              ),
+              style: TextStyle(color: primaryWhite, fontSize: 10),
             )
           ],
         ),
