@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/loginPage.dart';
 import 'package:flutter_it14proj/colors.dart';
-import 'package:google_fonts/google_fonts.dart';
-
+import 'package:flutter_it14proj/welcomePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,10 +18,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: mobileBackgroundColor,
         useMaterial3: true,
-      //  textTheme: GoogleFonts.inter(Theme.of(context).textTheme.displaySmall)
-      
+        //  textTheme: GoogleFonts.inter(Theme.of(context).textTheme.displaySmall)
       ),
-      home: const LoginPage(),
+      home: const WelcomePage(),
+      routes: {
+        'welcomePage': (context) => const WelcomePage(),
+        'loginPage': (context) => const LoginPage()
+
+        //add routes here
+      },
     );
   }
 }
