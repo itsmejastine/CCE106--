@@ -11,6 +11,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,42 +38,58 @@ class _LoginPageState extends State<LoginPage> {
           const SizedBox(
             height: 100,
           ),
-          Column(
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                    hintText: "email",
-                    prefixIcon: const Icon(
-                      Icons.people,
-                      color: primaryGreen,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(
-                        color:
-                            primaryGreen, //colors does not work for the border of the textField
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                      hintText: "email",
+                      prefixIcon: const Icon(
+                        Icons.people,
+                        color: primaryGreen,
                       ),
-                    )),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                    hintText: "password",
-                    prefixIcon: const Icon(
-                      Icons.lock,
-                      color: primaryGreen,
-                    ),
-                    iconColor: primaryGreen,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: const BorderSide(
                           color:
-                              primaryGreen), //colors does not work for the border of the textField
-                    )),
-              )
-            ],
+                              primaryGreen, //colors does not work for the border of the textField
+                        ),
+                      )),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Enter a pasword";
+                    }
+                    return null;
+                  },
+                  style: const TextStyle(color: primaryWhite),
+                  decoration: InputDecoration(
+                      hintText: "password",
+                      prefixIcon: const Icon(
+                        Icons.lock,
+                        color: primaryGreen,
+                      ),
+                      iconColor: primaryGreen,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: const BorderSide(
+                            color:
+                                primaryGreen), //colors does not work for the border of the textField
+                      )),
+                )
+              ],
+            ),
           ),
           const SizedBox(
             height: 100,
@@ -82,7 +99,9 @@ class _LoginPageState extends State<LoginPage> {
             width: 294,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'loginPage');
+                if (_formKey.currentState!.validate()) {
+                  Navigator.pushNamed(context, '');
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryGreen,
