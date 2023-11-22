@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/painting/gradient.dart';
 
 const mobileBackgroundColor = Color.fromRGBO(35, 35, 35, 1);
 const primaryGreen = Color.fromRGBO(21, 160, 39, 1);
