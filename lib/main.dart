@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/loginPage.dart';
 import 'package:flutter_it14proj/colors.dart';
+import 'package:flutter_it14proj/navBar.dart';
+import 'package:flutter_it14proj/profile.dart';
 import 'package:flutter_it14proj/splash.dart';
 import 'package:flutter_it14proj/welcomePage.dart';
 
@@ -21,10 +23,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         //  textTheme: GoogleFonts.inter(Theme.of(context).textTheme.displaySmall)
       ),
-      home: const Splash(),
+      home: const NavBarPage(),
       routes: {
         'welcomePage': (context) => const WelcomePage(),
-        'loginPage': (context) => const LoginPage()
+        'loginPage': (context) => const LoginPage(),
+        'profilePage': (context) => const ProfilePage(),
+        'navBarPage': (context) => const NavBarPage()
 
         //add routes here
       },
