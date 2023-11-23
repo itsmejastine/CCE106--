@@ -7,6 +7,7 @@ const primaryWhite = Color.fromRGBO(241, 243, 232, 1);
 const primaryRed = Color.fromRGBO(255, 88, 88, 1);
 const primaryGray = Color.fromRGBO(85, 85, 85, 1);
 const secondaryGreen = Color.fromRGBO(46, 55, 47, 1);
+const textGreen = Color.fromRGBO(30, 30, 30, 1);
 
 //gradient colors
 const gradientGreen = Color.fromRGBO(21, 160, 39, 1);

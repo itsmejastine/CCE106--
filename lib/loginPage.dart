@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
             child: ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  Navigator.pushNamed(context, '');
+                  Navigator.pushNamed(context, 'navBarPage');
                 }
               },
               style: ElevatedButton.styleFrom(
