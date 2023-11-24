@@ -4,6 +4,7 @@ import 'package:flutter_it14proj/colors.dart';
 import 'package:flutter_it14proj/navBar.dart';
 import 'package:flutter_it14proj/profile.dart';
 import 'package:flutter_it14proj/splash.dart';
+import 'package:flutter_it14proj/viewGoal.dart';
 import 'package:flutter_it14proj/welcomePage.dart';
 
 void main() {
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         'welcomePage': (context) => const WelcomePage(),
         'loginPage': (context) => const LoginPage(),
         'profilePage': (context) => const ProfilePage(),
-        'navBarPage': (context) => const NavBarPage()
+        'navBarPage': (context) => const NavBarPage(),
+        'viewGoal': (context) => const ViewGoal(),
 
         //add routes here
       },
