@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/colors.dart';
 import 'package:flutter_it14proj/loginPage.dart';
+import 'package:flutter_it14proj/moneyIn.dart';
+import 'package:flutter_it14proj/moneyOut.dart';
 import 'package:flutter_it14proj/profile.dart';
-import 'package:flutter_it14proj/splash.dart';
+import 'package:flutter_it14proj/viewGoal.dart';
 import 'package:flutter_it14proj/welcomePage.dart';
-
-const TextStyle _textStyle = TextStyle(
-  color: primaryWhite,
-  fontSize: 12,
-  fontFamily: 'Inter',
-  fontWeight: FontWeight.w400,
-  height: 0,
-);
 
 class NavBarPage extends StatefulWidget {
   const NavBarPage({super.key});
@@ -23,7 +17,12 @@ class NavBarPage extends StatefulWidget {
 class _NavBarPageState extends State<NavBarPage> {
   int _currentIndex = 0;
 
-  final pages = [LoginPage(), WelcomePage(), Splash(), ProfilePage()]; //change it to its corresponding page
+  final pages = [
+    LoginPage(),
+    MoneyIn(),
+    ViewGoal(),
+    ProfilePage()
+  ]; //change it to its corresponding page
 
   void _onItemTapped(int index) {
     setState(() {
