@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         'welcomePage': (context) => const WelcomePage(),
         'loginPage': (context) => const LoginPage(),
         'profilePage': (context) => const ProfilePage(),
-        'navBarPage': (context) => const NavBarPage()
+        'navBarPage': (context) => const NavBarPage(),
 
         //add routes here
       },
