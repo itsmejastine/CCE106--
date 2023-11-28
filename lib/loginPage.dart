@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: InputDecoration(
                       hintText: "email",
                       prefixIcon: const Icon(
-                        Icons.people,
+                        Icons.mail,
                         color: primaryGreen,
                       ),
                       border: OutlineInputBorder(

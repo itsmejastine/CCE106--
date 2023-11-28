@@ -33,6 +33,12 @@ class MyApp extends StatelessWidget {
         'loginPage': (context) => const LoginPage(),
         'profilePage': (context) => const ProfilePage(),
         'navBarPage': (context) => const NavBarPage(),
+<<<<<<< HEAD
+=======
+        'viewGoal': (context) => const ViewGoal(),
+        'moneyIn': (context) => const MoneyIn(),
+        'moneyOut': (context) => const MoneyOut()
+>>>>>>> 54fd9e4fd81daf012d422df0de3be492b2b73f40
 
         //add routes here
       },
