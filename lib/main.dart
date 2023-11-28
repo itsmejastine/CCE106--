@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/loginPage.dart';
 import 'package:flutter_it14proj/colors.dart';
@@ -8,8 +9,13 @@ import 'package:flutter_it14proj/profile.dart';
 import 'package:flutter_it14proj/splash.dart';
 import 'package:flutter_it14proj/viewGoal.dart';
 import 'package:flutter_it14proj/welcomePage.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+ );
   runApp(const MyApp());
 }
 
