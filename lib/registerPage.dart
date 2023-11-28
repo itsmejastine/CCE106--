@@ -56,6 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: const TextStyle(color: primaryWhite),
                     decoration: InputDecoration(
                         hintText: "Name",
+                        hintStyle: TextStyle(color: primaryGreen),
                         prefixIcon: const Icon(
                           Icons.person,
                           color: primaryGreen,
@@ -75,9 +76,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       }
                       return null;
                     },
-                    style: const TextStyle(color: primaryWhite),
                     decoration: InputDecoration(
                         hintText: "Email",
+                        hintStyle: TextStyle(color: primaryGreen),
                         prefixIcon: const Icon(
                           Icons.email,
                           color: primaryGreen,
@@ -100,6 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: const TextStyle(color: primaryWhite),
                     decoration: InputDecoration(
                         hintText: "Password",
+                        hintStyle: TextStyle(color: primaryGreen),
                         prefixIcon: const Icon(
                           Icons.lock,
                           color: primaryGreen,
@@ -122,6 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: const TextStyle(color: primaryWhite),
                     decoration: InputDecoration(
                         hintText: "Confirm Password",
+                        hintStyle: TextStyle(color: primaryGreen),
                         prefixIcon: const Icon(
                           Icons.lock,
                           color: primaryGreen,
@@ -186,8 +189,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    onTap: () =>
-                        launchUrlString('')) //add route of the register page
+                    onTap: () {
+                      Navigator.pushNamed(context, 'loginPage');
+                    }) //add route of the register page
               ],
             ),
           ],

@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it14proj/authenticator.dart';
 import 'package:flutter_it14proj/loginPage.dart';
 import 'package:flutter_it14proj/colors.dart';
 import 'package:flutter_it14proj/moneyIn.dart';
 import 'package:flutter_it14proj/moneyOut.dart';
 import 'package:flutter_it14proj/navBar.dart';
 import 'package:flutter_it14proj/profile.dart';
+import 'package:flutter_it14proj/registerPage.dart';
 import 'package:flutter_it14proj/splash.dart';
 import 'package:flutter_it14proj/viewGoal.dart';
 import 'package:flutter_it14proj/welcomePage.dart';
@@ -14,8 +16,8 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
- );
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -33,18 +35,16 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         //  textTheme: GoogleFonts.inter(Theme.of(context).textTheme.displaySmall)
       ),
-      home: const NavBarPage(),
+      home: const Authenticator(),
       routes: {
         'welcomePage': (context) => const WelcomePage(),
         'loginPage': (context) => const LoginPage(),
         'profilePage': (context) => const ProfilePage(),
         'navBarPage': (context) => const NavBarPage(),
-<<<<<<< HEAD
-=======
         'viewGoal': (context) => const ViewGoal(),
         'moneyIn': (context) => const MoneyIn(),
-        'moneyOut': (context) => const MoneyOut()
->>>>>>> 54fd9e4fd81daf012d422df0de3be492b2b73f40
+        'moneyOut': (context) => const MoneyOut(),
+        'register': (context) => const RegisterPage(),
 
         //add routes here
       },

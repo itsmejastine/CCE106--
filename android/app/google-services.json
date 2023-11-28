@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "367381584209",
+    "project_id": "cashflowdb-d4f0f",
+    "storage_bucket": "cashflowdb-d4f0f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367381584209:android:651cb24da3b8984947db70",
+        "android_client_info": {
+          "package_name": "com.example.flutter_it14proj"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCahP9wUoh0wbP5K6w4wwj3cNE0zXmUv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

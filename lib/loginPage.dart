@@ -1,7 +1,8 @@
+import 'dart:js_interop';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,7 +12,24 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  late String errormessage;
+  late bool isError;
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    errormessage = "This is an error";
+    isError = false;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,14 +61,17 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 TextFormField(
+                  controller: emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
                     }
                     return null;
                   },
+                  style: TextStyle(color: primaryWhite),
                   decoration: InputDecoration(
                       hintText: "email",
+                      hintStyle: TextStyle(color: primaryGreen),
                       prefixIcon: const Icon(
                         Icons.mail,
                         color: primaryGreen,
@@ -67,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 40,
                 ),
                 TextFormField(
+                  controller: passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Enter a pasword";
@@ -76,6 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: const TextStyle(color: primaryWhite),
                   decoration: InputDecoration(
                       hintText: "password",
+                      hintStyle: TextStyle(color: primaryGreen),
                       prefixIcon: const Icon(
                         Icons.lock,
                         color: primaryGreen,
@@ -100,7 +123,10 @@ class _LoginPageState extends State<LoginPage> {
             child: ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  Navigator.pushNamed(context, 'navBarPage');
+                  checkLogin(
+                    emailController.text,
+                    passwordController.text,
+                  );
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -140,12 +166,36 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  onTap: () =>
-                      launchUrlString('')) //add route of the register page
+                  onTap: () {
+                    Navigator.pushNamed(context, 'register');
+                  }) //add route of the register page
             ],
           ),
         ],
       ),
     ));
+  }
+
+  Future checkLogin(email, password) async {
+    showDialog(
+        context: context,
+        useRootNavigator: false,
+        barrierDismissible: false,
+        builder: (context) => Center(
+              child: CircularProgressIndicator(),
+            ));
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      setState(() {
+        errormessage = '';
+      });
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      setState(() {
+        errormessage = e.message.toString();
+      });
+    }
+    Navigator.pushNamed(context, 'profilePage');
   }
 }
