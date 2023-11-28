@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         'profilePage': (context) => const ProfilePage(),
         'navBarPage': (context) => const NavBarPage()
 
-        //add routes here
+        //add routes here ok
       },
     );
   }
