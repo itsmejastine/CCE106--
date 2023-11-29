@@ -17,9 +17,12 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(16, 36, 16, 36),
         child: Column(
           children: [
+            SizedBox(
+              height: 24,
+            ),
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadiusDirectional.circular(100),
@@ -34,6 +37,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 24,
+            ),
             Text(
               'REGISTRATION',
               style: GoogleFonts.daysOne(
@@ -41,6 +47,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 fontSize: 32,
                 color: primaryWhite,
               ),
+            ),
+            SizedBox(
+              height: 50,
             ),
             Form(
               key: _formKey,
@@ -55,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                     style: const TextStyle(color: primaryWhite),
                     decoration: InputDecoration(
-                        hintText: "Name",
+                        hintText: "Username",
                         hintStyle: TextStyle(color: primaryGreen),
                         prefixIcon: const Icon(
                           Icons.person,
@@ -68,6 +77,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               color:
                                   primaryGreen), //colors does not work for the border of the textField
                         )),
+                  ),
+                  SizedBox(
+                    height: 24,
                   ),
                   TextFormField(
                     validator: (value) {
@@ -91,6 +103,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                   primaryGreen), //colors does not work for the border of the textField
                         )),
                   ),
+                  SizedBox(
+                    height: 24,
+                  ),
                   TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -113,6 +128,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               color:
                                   primaryGreen), //colors does not work for the border of the textField
                         )),
+                  ),
+                  SizedBox(
+                    height: 24,
                   ),
                   TextFormField(
                     validator: (value) {
@@ -163,7 +181,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             const SizedBox(
-              height: 100,
+              height: 40,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -179,7 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 InkWell(
                     child: Text(
-                      'Login Now',
+                      'Login Here',
                       style: GoogleFonts.inter(
                         textStyle: Theme.of(context).textTheme.displaySmall,
                         fontSize: 12,
