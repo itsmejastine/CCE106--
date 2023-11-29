@@ -1,7 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -11,6 +11,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final user = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,18 +26,20 @@ class _ProfilePageState extends State<ProfilePage> {
                 const SizedBox(
                   width: 8,
                 ),
-                InkWell(
-                    child: Text(
-                      'Logout',
-                      style: GoogleFonts.inter(
-                        textStyle: Theme.of(context).textTheme.displaySmall,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: primaryRed,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    onTap: () => launchUrlString('welcomePage'))
+                ElevatedButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: mobileBackgroundColor,
+                      foregroundColor: primaryRed),
+                  child: const Text("Logout",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Inter",
+                        fontSize: 16,
+                      )),
+                ),
               ],
             ),
             SizedBox(
@@ -75,6 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Text(
                       "Username",
+                      // user.email!,
                       style: GoogleFonts.inter(
                         textStyle: Theme.of(context).textTheme.displayMedium,
                         fontSize: 24,
