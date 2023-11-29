@@ -2,6 +2,7 @@ import 'dart:js_interop';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/colors.dart';
+import 'package:flutter_it14proj/profile.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
@@ -173,10 +174,12 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ],
       ),
-    ));
+    )
+    
+    );
   }
 
-  Future checkLogin(email, password) async {
+  Future checkLogin(username, password) async {
     showDialog(
         context: context,
         useRootNavigator: false,
@@ -186,9 +189,9 @@ class _LoginPageState extends State<LoginPage> {
             ));
     try {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+          .signInWithEmailAndPassword(email: username, password: password);
       setState(() {
-        errormessage = '';
+        errormessage = " ";
       });
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -196,6 +199,6 @@ class _LoginPageState extends State<LoginPage> {
         errormessage = e.message.toString();
       });
     }
-    Navigator.pushNamed(context, 'profilePage');
+    Navigator.pop(context);
   }
 }
