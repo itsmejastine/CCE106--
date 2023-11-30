@@ -3,34 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/loginPage.dart';
 import 'package:flutter_it14proj/profile.dart';
 
-class Authenticator extends StatefulWidget {
+//to check if the user is signed in  or not
+class Authenticator extends StatelessWidget {
   const Authenticator({super.key});
 
-  @override
-  State<Authenticator> createState() => _AuthenticatorState();
-}
-
-class _AuthenticatorState extends State<Authenticator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.hasError) {
-              return const Center(
-                child: Text('Something went wrong!'),
-              );
-            } else if (snapshot.hasData) {
-              return const ProfilePage();
-            } else {
-              return const LoginPage();
-            }
-          }),
+        stream: FirebaseAuth.instance
+            .authStateChanges(), //listenign if the user is logged in or not
+        builder: (context, snapshot) {
+          //user is logged in
+          if (snapshot.hasData) {
+            return ProfilePage();
+          }
+          //user is NOT logged in
+          else {
+            return LoginPage();
+          }
+        },
+      ),
     );
   }
 }

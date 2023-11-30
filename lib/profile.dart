@@ -11,7 +11,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final user = FirebaseAuth.instance.currentUser!;
+  //logout user method
+  void logUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: 8,
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                  },
+                  onPressed: logUserOut,
                   style: ElevatedButton.styleFrom(
                       backgroundColor: mobileBackgroundColor,
                       foregroundColor: primaryRed),

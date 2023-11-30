@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/colors.dart';
+import 'package:flutter_it14proj/firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -11,6 +12,10 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _userNameController = TextEditingController();
+  final _emailRegController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -56,9 +61,10 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 children: [
                   TextFormField(
+                    controller: _userNameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Enter a pasword";
+                        return "Enter your Username";
                       }
                       return null;
                     },
@@ -82,9 +88,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 24,
                   ),
                   TextFormField(
+                    controller: _emailRegController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Enter a pasword";
+                        return "Enter your email";
                       }
                       return null;
                     },
@@ -107,6 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 24,
                   ),
                   TextFormField(
+                    controller: _passwordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Enter a pasword";
@@ -133,6 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 24,
                   ),
                   TextFormField(
+                    controller: _confirmPasswordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Enter a pasword";
@@ -159,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             const SizedBox(
-              height: 100,
+              height: 24,
             ),
             SizedBox(
               height: 48,
