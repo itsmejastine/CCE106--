@@ -14,7 +14,6 @@ class Authenticator extends StatelessWidget {
         stream: FirebaseAuth.instance
             .authStateChanges(), //listenign if the user is logged in or not
         builder: (context, snapshot) {
-          
           //user is logged in
           if (snapshot.hasData) {
             return ProfilePage();

@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/colors.dart';
-import 'package:flutter_it14proj/firestore.dart';
+import 'package:flutter_it14proj/services/firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -12,6 +14,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _userNameController = TextEditingController();
   final _emailRegController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -36,6 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
         return;
       }
 
+      addUserDetails(_userNameController.text);
       //try sign in
       try {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -57,6 +61,12 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
   } //last loginUser
+
+  Future addUserDetails(String username) async {
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .add({'username': username});
+  }
 
   void errorMessage(String message) {
     showDialog(
@@ -98,7 +108,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Container(
                     height: 200,
                     width: 200,
-                    color: Colors.red,
+                    decoration: BoxDecoration(
+                        border: const GradientBoxBorder(
+                      gradient: LinearGradient(
+                          colors: [gradientGreen, gradientYellow]),
+                      width: 20,
+                    )),
                     child: Image.asset(
                       '../lib/images/zzz.jpg',
                       fit: BoxFit.cover,
@@ -124,6 +139,33 @@ class _RegisterPageState extends State<RegisterPage> {
                 key: _formKey,
                 child: Column(
                   children: [
+                    TextFormField(
+                      controller: _userNameController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Enter your email";
+                        }
+                        return null;
+                      },
+                      style: TextStyle(color: primaryWhite),
+                      decoration: InputDecoration(
+                          hintText: "Username",
+                          hintStyle: TextStyle(color: primaryGreen),
+                          prefixIcon: const Icon(
+                            Icons.person,
+                            color: primaryGreen,
+                          ),
+                          iconColor: primaryGreen,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: const BorderSide(
+                                color:
+                                    primaryGreen), //colors does not work for the border of the textField
+                          )),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
                     TextFormField(
                       controller: _emailRegController,
                       validator: (value) {

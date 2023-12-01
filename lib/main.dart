@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         //  textTheme: GoogleFonts.inter(Theme.of(context).textTheme.displaySmall)
       ),
-      home: const Authenticator(),
+      home: const NavBarPage(),
       routes: {
         'welcomePage': (context) => const WelcomePage(),
         'loginPage': (context) => const LoginPage(),

@@ -20,15 +20,8 @@ class _LoginPageState extends State<LoginPage> {
   //formKey
   final _formKey = GlobalKey<FormState>();
 
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
   //login user method
-  void logUserIn(BuildContext context) async {
+  void logUserIn() async {
     if (_formKey.currentState!.validate()) {
       showDialog(
           context: context,
@@ -38,7 +31,6 @@ class _LoginPageState extends State<LoginPage> {
             );
           });
 
-      FirebaseAuth.instance.currentUser;
       //try sign in
       try {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -49,18 +41,27 @@ class _LoginPageState extends State<LoginPage> {
         print("Error code: ${e.code}");
         //pop the loading circle
         Navigator.pop(context);
+        //wrong email
+        if (e.code == 'invalid-email') {
+          //show error
+          wrongEmailMessage();
+        }
+        //wrong password
+        else if (e.code == 'invalid-login-credentials') {
+          //show error
+          wrongPasswordMessage();
 
-        //error
-        errorMessage(e.code);
+          //wrong credentials
+        }
       }
     }
   } //last loginUser
 
-  void errorMessage(String message) {
+  void wrongPasswordMessage() {
     showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
+          return const AlertDialog(
             backgroundColor: mobileBackgroundColor,
             title: Column(
               children: [
@@ -72,7 +73,30 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 16,
                 ),
-                Text(message, style: TextStyle(color: primaryWhite)),
+                Text('Wrong password', style: TextStyle(color: primaryWhite)),
+              ],
+            ),
+          );
+        });
+  }
+
+  void wrongEmailMessage() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            backgroundColor: mobileBackgroundColor,
+            title: Column(
+              children: [
+                Icon(
+                  Icons.error_outline,
+                  color: primaryRed,
+                  size: 90,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text('Incorrect Email', style: TextStyle(color: primaryWhite)),
               ],
             ),
           );
@@ -171,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 48,
               width: 294,
               child: ElevatedButton(
-                onPressed: () => logUserIn(context),
+                onPressed: logUserIn,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryGreen,
                   elevation: 0,

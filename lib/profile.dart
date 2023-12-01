@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/colors.dart';
@@ -11,10 +12,30 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+//Document IDs
+  List<String> docIDs = [];
+
+//get docIDs
+  // Future getDocID() async {
+  //   await FirebaseFirestore.instance
+  //       .collection('Users')
+  //       .get()
+  //       .then((snapshot) => snapshot.docs.forEach((documents) {
+  //             print(documents.reference);
+  //             docIDs.add(documents.reference.id);
+  //           }));
+  // }
+
   //logout user method
   void logUserOut() {
     FirebaseAuth.instance.signOut();
   }
+
+  @override
+  // void initState() {
+  //   getDocID();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Username",
-                        // user.email!,
+                        'username',
                         style: GoogleFonts.inter(
                           textStyle: Theme.of(context).textTheme.displayMedium,
                           fontSize: 24,

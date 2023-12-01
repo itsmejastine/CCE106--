@@ -171,7 +171,7 @@ class _ViewGoalState extends State<ViewGoal> {
                 Row(
                   children: [
                     Text(
-                      "Enter Ammount Saved",
+                      "Enter Amount Saved",
                       style: GoogleFonts.inter(
                         textStyle: Theme.of(context).textTheme.displaySmall,
                         fontSize: 16,
