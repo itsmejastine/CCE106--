@@ -21,17 +21,23 @@ class _MoneyInState extends State<MoneyIn> {
   TextEditingController categoryController = TextEditingController();
   TextEditingController paymentController = TextEditingController();
 
-  //type variable
+  //track the visibility of the second button
+  bool isExpenseButtonVisible = false;
+  bool isIncomeButtonVisible = true;
+
+  //text state
+  FontWeight moneyInFontWeight = FontWeight.w700;
+  FontWeight moneyOutFontWeight = FontWeight.normal;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: BackButton(
+        leading: const BackButton(
           color: primaryWhite,
         ),
-        title: Text('Back', style: TextStyle(color: primaryWhite)),
+        title: const Text('Back', style: TextStyle(color: primaryWhite)),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 20, 16, 40),
@@ -41,49 +47,75 @@ class _MoneyInState extends State<MoneyIn> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  //Money In Button
                   SizedBox(
                     width: 190,
                     height: 54,
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, 'moneyIn');
+                        setState(() {
+                          moneyInButton = Color.fromRGBO(21, 160, 39, 80);
+                          moneyOutButton = mobileBackgroundColor;
+                          moneyInText = primaryWhite;
+                          moneyOutText = primaryGray;
+                          moneyInBorder = primaryGreen;
+                          moneyOutBorder = primaryGray;
+                          moneyInFontWeight = FontWeight.bold;
+                          moneyOutFontWeight = FontWeight.normal;
+                        });
                       },
                       style: OutlinedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(21, 160, 39, 80),
-                          shape: RoundedRectangleBorder(
+                          backgroundColor: moneyInButton,
+                          shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(5),
                                 bottomLeft: Radius.circular(5)),
                           ),
-                          side: const BorderSide(
-                            color: primaryGreen,
+                          side: BorderSide(
+                            color: moneyInBorder,
                           )),
-                      child: const Text(
+                      child: Text(
                         "Money In",
-                        style: TextStyle(color: primaryWhite),
+                        style: TextStyle(
+                            color: moneyInText, fontWeight: moneyInFontWeight),
                       ),
                     ),
                   ),
+
+                  //Money out Button
                   SizedBox(
                     width: 190,
                     height: 54,
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, 'moneyOut');
+                        setState(() {
+                          moneyInButton = mobileBackgroundColor;
+                          moneyOutButton = Color.fromRGBO(255, 88, 88, 80);
+                          moneyOutFontWeight = FontWeight.bold;
+                          moneyInFontWeight = FontWeight.normal;
+                          moneyOutText = primaryWhite;
+                          moneyInText = primaryGray;
+                          moneyInBorder = primaryGray;
+                          moneyOutBorder = primaryRed;
+                          isExpenseButtonVisible = !isExpenseButtonVisible;
+                          isIncomeButtonVisible = !isIncomeButtonVisible;
+                        });
                       },
                       style: OutlinedButton.styleFrom(
-                          //backgroundColor: Color.fromRGBO(21, 160, 39, 80),
-                          shape: RoundedRectangleBorder(
+                          backgroundColor: moneyOutButton,
+                          shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(5),
                                 bottomRight: Radius.circular(5)),
                           ),
-                          side: const BorderSide(
-                            color: primaryGray,
+                          side: BorderSide(
+                            color: moneyOutBorder,
                           )),
-                      child: const Text(
+                      child: Text(
                         "Money Out",
-                        style: TextStyle(color: primaryGray),
+                        style: TextStyle(
+                            color: moneyOutText,
+                            fontWeight: moneyOutFontWeight),
                       ),
                     ),
                   ),
@@ -117,11 +149,11 @@ class _MoneyInState extends State<MoneyIn> {
                   Form(
                     child: TextFormField(
                       controller: descriptionController,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 32,
                           color: primaryWhite,
                           fontWeight: FontWeight.w700),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Enter Description",
                         hintStyle: TextStyle(
                             color: primaryGray,
@@ -161,11 +193,11 @@ class _MoneyInState extends State<MoneyIn> {
                   Form(
                     child: TextFormField(
                       controller: amountController,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 24,
                           color: primaryWhite,
                           fontWeight: FontWeight.w700),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "0.00",
                         hintStyle: TextStyle(
                             color: primaryGray,
@@ -205,11 +237,11 @@ class _MoneyInState extends State<MoneyIn> {
                   Form(
                     child: TextFormField(
                       controller: dateController,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 24,
                           color: primaryWhite,
                           fontWeight: FontWeight.w700),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         suffixIcon: Icon(
                           Icons.date_range_rounded,
                           color: primaryWhite,
@@ -245,11 +277,11 @@ class _MoneyInState extends State<MoneyIn> {
                   Form(
                     child: TextFormField(
                       controller: categoryController,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 24,
                           color: primaryWhite,
                           fontWeight: FontWeight.w700),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Uncategorize",
                         hintStyle: TextStyle(
                             color: primaryGray,
@@ -281,11 +313,11 @@ class _MoneyInState extends State<MoneyIn> {
                   Form(
                     child: TextFormField(
                       controller: paymentController,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 24,
                           color: primaryWhite,
                           fontWeight: FontWeight.w700),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Enter Mode of Payment",
                         hintStyle: TextStyle(
                             color: primaryGray,
@@ -300,34 +332,86 @@ class _MoneyInState extends State<MoneyIn> {
               const SizedBox(
                 height: 100,
               ),
-              Center(
-                child: SizedBox(
-                  height: 54,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      String description = descriptionController.text;
-                      double amount = double.parse(amountController.text);
-                      String date = dateController.text;
-                      String category = categoryController.text;
-                      String payment = paymentController.text;
-                      String type = "Income";
-                      firestorService.addTransaction(
-                          description, amount, date, category, payment, type);
 
-                      descriptionController.clear();
-                      amountController.clear();
-                      dateController.clear();
-                      categoryController.clear();
-                      paymentController.clear();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryGreen,
-                      elevation: 0,
+              //income button
+              Visibility(
+                visible: isIncomeButtonVisible,
+                child: Center(
+                  child: SizedBox(
+                    height: 54,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        String description = descriptionController.text;
+                        double amount = double.parse(amountController.text);
+                        String date = dateController.text;
+                        String category = categoryController.text;
+                        String payment = paymentController.text;
+                        String type = "Income";
+                        firestorService.addTransaction(
+                            description, amount, date, category, payment, type);
+
+                        descriptionController.clear();
+                        amountController.clear();
+                        dateController.clear();
+                        categoryController.clear();
+                        paymentController.clear();
+
+                        setState(
+                          () {
+                            isIncomeButtonVisible = !isIncomeButtonVisible;
+                          },
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryGreen,
+                        elevation: 0,
+                      ),
+                      child: const Text(
+                        "Add Income",
+                        style: TextStyle(color: primaryWhite, fontSize: 20),
+                      ),
                     ),
-                    child: const Text(
-                      "Add Income",
-                      style: TextStyle(color: primaryWhite, fontSize: 20),
+                  ),
+                ),
+              ),
+
+              //Expenses Button
+              Visibility(
+                visible: isExpenseButtonVisible,
+                child: Center(
+                  child: SizedBox(
+                    height: 54,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        String description = descriptionController.text;
+                        double amount = double.parse(amountController.text);
+                        String date = dateController.text;
+                        String category = categoryController.text;
+                        String payment = paymentController.text;
+                        String type = "Expenses";
+                        firestorService.addTransaction(
+                            description, amount, date, category, payment, type);
+
+                        descriptionController.clear();
+                        amountController.clear();
+                        dateController.clear();
+                        categoryController.clear();
+                        paymentController.clear();
+
+                        setState(() {
+                          isExpenseButtonVisible = !isExpenseButtonVisible;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryRed,
+                        elevation: 0,
+                      ),
+                      child: const Text(
+                        "Add Expense",
+                        style: TextStyle(color: primaryWhite, fontSize: 20),
+                      ),
                     ),
                   ),
                 ),

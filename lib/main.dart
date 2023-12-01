@@ -4,7 +4,6 @@ import 'package:flutter_it14proj/authenticator.dart';
 import 'package:flutter_it14proj/loginPage.dart';
 import 'package:flutter_it14proj/colors.dart';
 import 'package:flutter_it14proj/moneyIn.dart';
-import 'package:flutter_it14proj/moneyOut.dart';
 import 'package:flutter_it14proj/navBar.dart';
 import 'package:flutter_it14proj/profile.dart';
 import 'package:flutter_it14proj/registerPage.dart';
@@ -43,7 +42,6 @@ class MyApp extends StatelessWidget {
         'navBarPage': (context) => const NavBarPage(),
         'viewGoal': (context) => const ViewGoal(),
         'moneyIn': (context) => const MoneyIn(),
-        'moneyOut': (context) => const MoneyOut(),
         'register': (context) => const RegisterPage(),
 
         //add routes here
