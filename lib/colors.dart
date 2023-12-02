@@ -23,3 +23,6 @@ Color moneyInText = primaryWhite;
 Color moneyInBorder = primaryGreen;
 Color moneyOutBorder = primaryGray;
 
+Color appBarBgColor = primaryGreen;
+Color appBarTextColor = primaryWhite;
+Color amountTextColor = primaryGreen;

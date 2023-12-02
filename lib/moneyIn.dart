@@ -12,7 +12,7 @@ class MoneyIn extends StatefulWidget {
 
 class _MoneyInState extends State<MoneyIn> {
   //firestore
-  final FirestorService firestorService = FirestorService();
+  final FirestoreService firestorService = FirestoreService();
 
   //text controllers
   TextEditingController descriptionController = TextEditingController();

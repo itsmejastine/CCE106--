@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirestorService {
+class FirestoreService {
 //get collection from users
   final CollectionReference transaction =
       FirebaseFirestore.instance.collection('transaction');
