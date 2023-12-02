@@ -5,6 +5,9 @@ import 'package:flutter_it14proj/services/firestore.dart';
 import 'package:flutter_it14proj/splash%20pages/success.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//Dropdown list
+const List<String> list = <String>['None', 'Cash', 'Gcash', 'Fund Transfer'];
+
 class MoneyIn extends StatefulWidget {
   const MoneyIn({super.key});
 
@@ -15,6 +18,9 @@ class MoneyIn extends StatefulWidget {
 class _MoneyInState extends State<MoneyIn> {
   //firestore
   final FirestoreService firestorService = FirestoreService();
+
+  //Calling dropdown
+  String dropdownValue = list.first;
 
   //text controllers
   TextEditingController descriptionController = TextEditingController();
@@ -30,6 +36,9 @@ class _MoneyInState extends State<MoneyIn> {
   //text state
   FontWeight moneyInFontWeight = FontWeight.w700;
   FontWeight moneyOutFontWeight = FontWeight.normal;
+
+  //formKey
+  final moneyformKey = GlobalKey<FormState>();
 
   //Function to navigate to the success.dart
   void TransactionSuccess() {
@@ -138,142 +147,171 @@ class _MoneyInState extends State<MoneyIn> {
                 ],
               ),
               const SizedBox(height: 28),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Description",
-                        style: GoogleFonts.inter(
-                          textStyle: Theme.of(context).textTheme.displaySmall,
-                          fontSize: 16,
-                          color: primaryGreen,
+              //-------- DESCRIPTION ----------
+              Form(
+                key: moneyformKey,
+                child: Column(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Description",
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 16,
+                                color: primaryGreen,
+                              ),
+                            ),
+                            Text(
+                              "*",
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 16,
+                                color: primaryRed,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        "*",
-                        style: GoogleFonts.inter(
-                          textStyle: Theme.of(context).textTheme.displaySmall,
-                          fontSize: 16,
-                          color: primaryRed,
+                        const SizedBox(height: 4),
+                        TextFormField(
+                          controller: descriptionController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Required field';
+                            }
+                            return null;
+                          },
+                          style: const TextStyle(
+                              fontSize: 32,
+                              color: primaryWhite,
+                              fontWeight: FontWeight.w700),
+                          decoration: const InputDecoration(
+                            hintText: "Enter Description",
+                            hintStyle: TextStyle(
+                                color: primaryGray,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w100,
+                                fontSize: 32),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Form(
-                    child: TextFormField(
-                      controller: descriptionController,
-                      style: const TextStyle(
-                          fontSize: 32,
-                          color: primaryWhite,
-                          fontWeight: FontWeight.w700),
-                      decoration: const InputDecoration(
-                        hintText: "Enter Description",
-                        hintStyle: TextStyle(
-                            color: primaryGray,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w100,
-                            fontSize: 32),
-                      ),
+                      ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    //-------- AMOUNT -----------
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Amount",
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 16,
+                                color: primaryGreen,
+                              ),
+                            ),
+                            Text(
+                              "*",
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 16,
+                                color: primaryRed,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        TextFormField(
+                          controller: amountController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Required field';
+                            }
+                            return null;
+                          },
+                          style: const TextStyle(
+                              fontSize: 24,
+                              color: primaryWhite,
+                              fontWeight: FontWeight.w700),
+                          decoration: const InputDecoration(
+                            hintText: "0.00",
+                            hintStyle: TextStyle(
+                                color: primaryGray,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.normal,
+                                fontSize: 24),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    //-------- DATE -----------
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Date",
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 16,
+                                color: primaryGreen,
+                              ),
+                            ),
+                            Text(
+                              "*",
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 16,
+                                color: primaryRed,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        TextFormField(
+                          controller: dateController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Required field';
+                            }
+                            return null;
+                          },
+                          style: const TextStyle(
+                              fontSize: 24,
+                              color: primaryWhite,
+                              fontWeight: FontWeight.w700),
+                          decoration: const InputDecoration(
+                            suffixIcon: Icon(
+                              Icons.date_range_rounded,
+                              color: primaryWhite,
+                            ),
+                            hintText: "mm/dd/yyyy",
+                            hintStyle: TextStyle(
+                                color: primaryGray,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.normal,
+                                fontSize: 24),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Amount",
-                        style: GoogleFonts.inter(
-                          textStyle: Theme.of(context).textTheme.displaySmall,
-                          fontSize: 16,
-                          color: primaryGreen,
-                        ),
-                      ),
-                      Text(
-                        "*",
-                        style: GoogleFonts.inter(
-                          textStyle: Theme.of(context).textTheme.displaySmall,
-                          fontSize: 16,
-                          color: primaryRed,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Form(
-                    child: TextFormField(
-                      controller: amountController,
-                      style: const TextStyle(
-                          fontSize: 24,
-                          color: primaryWhite,
-                          fontWeight: FontWeight.w700),
-                      decoration: const InputDecoration(
-                        hintText: "0.00",
-                        hintStyle: TextStyle(
-                            color: primaryGray,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.normal,
-                            fontSize: 24),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Date",
-                        style: GoogleFonts.inter(
-                          textStyle: Theme.of(context).textTheme.displaySmall,
-                          fontSize: 16,
-                          color: primaryGreen,
-                        ),
-                      ),
-                      Text(
-                        "*",
-                        style: GoogleFonts.inter(
-                          textStyle: Theme.of(context).textTheme.displaySmall,
-                          fontSize: 16,
-                          color: primaryRed,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Form(
-                    child: TextFormField(
-                      controller: dateController,
-                      style: const TextStyle(
-                          fontSize: 24,
-                          color: primaryWhite,
-                          fontWeight: FontWeight.w700),
-                      decoration: const InputDecoration(
-                        suffixIcon: Icon(
-                          Icons.date_range_rounded,
-                          color: primaryWhite,
-                        ),
-                        hintText: "mm/dd/yyyy",
-                        hintStyle: TextStyle(
-                            color: primaryGray,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.normal,
-                            fontSize: 24),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
+              //-------- CATEGORY -----------
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -310,6 +348,7 @@ class _MoneyInState extends State<MoneyIn> {
                 ],
               ),
               const SizedBox(height: 20),
+              //-------- MOP -----------
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -326,22 +365,29 @@ class _MoneyInState extends State<MoneyIn> {
                     ],
                   ),
                   const SizedBox(height: 4),
-                  Form(
-                    child: TextFormField(
-                      controller: paymentController,
-                      style: const TextStyle(
-                          fontSize: 24,
-                          color: primaryWhite,
-                          fontWeight: FontWeight.w700),
-                      decoration: const InputDecoration(
-                        hintText: "Enter Mode of Payment",
-                        hintStyle: TextStyle(
-                            color: primaryGray,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.normal,
-                            fontSize: 24),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DropdownButton<String>(
+                          value: dropdownValue,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          style: const TextStyle(color: primaryWhite),
+                          onChanged: (String? value) {
+                            // This is called when the user selects an item.
+                            setState(() {
+                              dropdownValue = value!;
+                            });
+                          },
+                          items: list
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -358,20 +404,22 @@ class _MoneyInState extends State<MoneyIn> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        String description = descriptionController.text;
-                        double amount = double.parse(amountController.text);
-                        String date = dateController.text;
-                        String category = categoryController.text;
-                        String payment = paymentController.text;
-                        String type = "Income";
-                        firestorService.addTransaction(
-                            description, amount, date, category, payment, type);
+                        if (moneyformKey.currentState!.validate()) {
+                          String description = descriptionController.text;
+                          double amount = double.parse(amountController.text);
+                          String date = dateController.text;
+                          String category = categoryController.text;
+                          String payment = paymentController.text;
+                          String type = "Income";
+                          firestorService.addTransaction(description, amount,
+                              date, category, payment, type);
 
-                        descriptionController.clear();
-                        amountController.clear();
-                        dateController.clear();
-                        categoryController.clear();
-                        paymentController.clear();
+                          descriptionController.clear();
+                          amountController.clear();
+                          dateController.clear();
+                          categoryController.clear();
+                          paymentController.clear();
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryGreen,
@@ -395,20 +443,22 @@ class _MoneyInState extends State<MoneyIn> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        String description = descriptionController.text;
-                        double amount = double.parse(amountController.text);
-                        String date = dateController.text;
-                        String category = categoryController.text;
-                        String payment = paymentController.text;
-                        String type = "Expenses";
-                        firestorService.addTransaction(
-                            description, amount, date, category, payment, type);
+                        if (moneyformKey.currentState!.validate()) {
+                          String description = descriptionController.text;
+                          double amount = double.parse(amountController.text);
+                          String date = dateController.text;
+                          String category = categoryController.text;
+                          String payment = paymentController.text;
+                          String type = "Expenses";
+                          firestorService.addTransaction(description, amount,
+                              date, category, payment, type);
 
-                        descriptionController.clear();
-                        amountController.clear();
-                        dateController.clear();
-                        categoryController.clear();
-                        paymentController.clear();
+                          descriptionController.clear();
+                          amountController.clear();
+                          dateController.clear();
+                          categoryController.clear();
+                          paymentController.clear();
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryRed,
