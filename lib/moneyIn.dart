@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/colors.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
+import 'package:flutter_it14proj/splash%20pages/success.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MoneyIn extends StatefulWidget {
@@ -28,6 +30,18 @@ class _MoneyInState extends State<MoneyIn> {
   //text state
   FontWeight moneyInFontWeight = FontWeight.w700;
   FontWeight moneyOutFontWeight = FontWeight.normal;
+
+  //Function to navigate to the success.dart
+  void TransactionSuccess() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Success()),
+    );
+
+    Timer(Duration(seconds: 5), () {
+      Navigator.pop(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +76,8 @@ class _MoneyInState extends State<MoneyIn> {
                           moneyOutBorder = primaryGray;
                           moneyInFontWeight = FontWeight.bold;
                           moneyOutFontWeight = FontWeight.normal;
+                          isExpenseButtonVisible = false;
+                          isIncomeButtonVisible = true;
                         });
                       },
                       style: OutlinedButton.styleFrom(
@@ -356,12 +372,6 @@ class _MoneyInState extends State<MoneyIn> {
                         dateController.clear();
                         categoryController.clear();
                         paymentController.clear();
-
-                        setState(
-                          () {
-                            isIncomeButtonVisible = !isIncomeButtonVisible;
-                          },
-                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryGreen,
@@ -399,10 +409,6 @@ class _MoneyInState extends State<MoneyIn> {
                         dateController.clear();
                         categoryController.clear();
                         paymentController.clear();
-
-                        setState(() {
-                          isExpenseButtonVisible = !isExpenseButtonVisible;
-                        });
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryRed,

@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         //  textTheme: GoogleFonts.inter(Theme.of(context).textTheme.displaySmall)
       ),
-      home: const ViewTransaction (),
+      home: const MoneyIn(),
       routes: {
         'welcomePage': (context) => const WelcomePage(),
         'loginPage': (context) => const LoginPage(),
