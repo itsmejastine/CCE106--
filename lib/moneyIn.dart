@@ -4,6 +4,7 @@ import 'package:flutter_it14proj/colors.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
 import 'package:flutter_it14proj/splash%20pages/success.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 //Dropdown list
 const List<String> paymentList = <String>[
@@ -49,6 +50,7 @@ class _MoneyInState extends State<MoneyIn> {
   String categoryValue = incomeList.first;
   List<String> currentCategoryList = incomeList;
 
+  //dropdown category
   void updateCategoryList(bool isMoneyIn) {
     setState(() {
       if (isMoneyIn == true) {
@@ -81,16 +83,10 @@ class _MoneyInState extends State<MoneyIn> {
   //formKey
   final moneyformKey = GlobalKey<FormState>();
 
-  //Function to navigate to the success.dart
-  void TransactionSuccess() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const Success()),
-    );
-
-    Timer(Duration(seconds: 5), () {
-      Navigator.pop(context);
-    });
+  @override
+  void initState() {
+    super.initState();
+    dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
   }
 
   @override
@@ -331,6 +327,7 @@ class _MoneyInState extends State<MoneyIn> {
                             }
                             return null;
                           },
+                          readOnly: true,
                           style: const TextStyle(
                               fontSize: 24,
                               color: primaryWhite,
@@ -340,13 +337,26 @@ class _MoneyInState extends State<MoneyIn> {
                               Icons.date_range_rounded,
                               color: primaryWhite,
                             ),
-                            hintText: "mm/dd/yyyy",
-                            hintStyle: TextStyle(
-                                color: primaryGray,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.normal,
-                                fontSize: 24),
                           ),
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1950),
+                                lastDate: DateTime(2100));
+
+                            if (pickedDate != null) {
+                              print(pickedDate);
+                              String formattedDate =
+                                  DateFormat('MM-dd-yyyy').format(pickedDate);
+
+                              print(formattedDate);
+
+                              setState(() {
+                                dateController.text = formattedDate;
+                              });
+                            } else {}
+                          },
                         ),
                       ],
                     ),
@@ -483,7 +493,8 @@ class _MoneyInState extends State<MoneyIn> {
 
                           descriptionController.clear();
                           amountController.clear();
-                          dateController.clear();
+                          dateController.text =
+                              DateFormat('MM-dd-yyyy').format(DateTime.now());
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -520,7 +531,8 @@ class _MoneyInState extends State<MoneyIn> {
 
                           descriptionController.clear();
                           amountController.clear();
-                          dateController.clear();
+                          dateController.text =
+                              DateFormat('MM-dd-yyyy').format(DateTime.now());
                         }
                       },
                       style: ElevatedButton.styleFrom(
