@@ -4,12 +4,13 @@ import 'package:flutter_it14proj/authenticator.dart';
 import 'package:flutter_it14proj/loginPage.dart';
 import 'package:flutter_it14proj/colors.dart';
 import 'package:flutter_it14proj/moneyIn.dart';
-import 'package:flutter_it14proj/moneyOut.dart';
 import 'package:flutter_it14proj/navBar.dart';
 import 'package:flutter_it14proj/profile.dart';
 import 'package:flutter_it14proj/registerPage.dart';
-import 'package:flutter_it14proj/splash.dart';
+import 'package:flutter_it14proj/splash%20pages/splash.dart';
+import 'package:flutter_it14proj/splash%20pages/success.dart';
 import 'package:flutter_it14proj/viewGoal.dart';
+import 'package:flutter_it14proj/viewTransaction.dart';
 import 'package:flutter_it14proj/welcomePage.dart';
 import 'firebase_options.dart';
 
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         //  textTheme: GoogleFonts.inter(Theme.of(context).textTheme.displaySmall)
       ),
-      home: const Authenticator(),
+      home: const MoneyIn(),
       routes: {
         'welcomePage': (context) => const WelcomePage(),
         'loginPage': (context) => const LoginPage(),
@@ -43,7 +44,6 @@ class MyApp extends StatelessWidget {
         'navBarPage': (context) => const NavBarPage(),
         'viewGoal': (context) => const ViewGoal(),
         'moneyIn': (context) => const MoneyIn(),
-        'moneyOut': (context) => const MoneyOut(),
         'register': (context) => const RegisterPage(),
 
         //add routes here
