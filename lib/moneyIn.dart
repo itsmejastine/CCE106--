@@ -6,7 +6,32 @@ import 'package:flutter_it14proj/splash%20pages/success.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //Dropdown list
-const List<String> list = <String>['None', 'Cash', 'Gcash', 'Fund Transfer'];
+const List<String> paymentList = <String>[
+  'None',
+  'Cash',
+  'Gcash',
+  'Fund Transfer'
+];
+const List<String> incomeList = <String>[
+  'Uncategorized',
+  'Allowance',
+  'Salary',
+  'Government Aid',
+  'Cash Savings',
+  'Extra Income',
+  'Others',
+];
+const List<String> expensesList = <String>[
+  'Uncategorized',
+  'Food',
+  'Transportation',
+  'Water Bill',
+  'Electricty Bill',
+  'Groceries',
+  'Loans Payment',
+  'Rent',
+  'Travel',
+];
 
 class MoneyIn extends StatefulWidget {
   const MoneyIn({super.key});
@@ -20,14 +45,30 @@ class _MoneyInState extends State<MoneyIn> {
   final FirestoreService firestorService = FirestoreService();
 
   //Calling dropdown
-  String dropdownValue = list.first;
+  String dropdownValue = paymentList.first;
+  String categoryValue = incomeList.first;
+  List<String> currentCategoryList = incomeList;
+
+  void updateCategoryList(bool isMoneyIn) {
+    setState(() {
+      if (isMoneyIn == true) {
+        currentCategoryList = incomeList;
+        if (!incomeList.contains(categoryValue)) {
+          categoryValue = incomeList.first;
+        }
+      } else {
+        currentCategoryList = expensesList;
+        if (!expensesList.contains(categoryValue)) {
+          categoryValue = expensesList.first;
+        }
+      }
+    });
+  }
 
   //text controllers
   TextEditingController descriptionController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController dateController = TextEditingController();
-  TextEditingController categoryController = TextEditingController();
-  TextEditingController paymentController = TextEditingController();
 
   //track the visibility of the second button
   bool isExpenseButtonVisible = false;
@@ -87,6 +128,7 @@ class _MoneyInState extends State<MoneyIn> {
                           moneyOutFontWeight = FontWeight.normal;
                           isExpenseButtonVisible = false;
                           isIncomeButtonVisible = true;
+                          updateCategoryList(true);
                         });
                       },
                       style: OutlinedButton.styleFrom(
@@ -124,6 +166,7 @@ class _MoneyInState extends State<MoneyIn> {
                           moneyOutBorder = primaryRed;
                           isExpenseButtonVisible = !isExpenseButtonVisible;
                           isIncomeButtonVisible = !isIncomeButtonVisible;
+                          updateCategoryList(false);
                         });
                       },
                       style: OutlinedButton.styleFrom(
@@ -328,22 +371,38 @@ class _MoneyInState extends State<MoneyIn> {
                     ],
                   ),
                   const SizedBox(height: 4),
-                  Form(
-                    child: TextFormField(
-                      controller: categoryController,
-                      style: const TextStyle(
-                          fontSize: 24,
-                          color: primaryWhite,
-                          fontWeight: FontWeight.w700),
-                      decoration: const InputDecoration(
-                        hintText: "Uncategorize",
-                        hintStyle: TextStyle(
-                            color: primaryGray,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.normal,
-                            fontSize: 24),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            DropdownButton<String>(
+                              value: categoryValue,
+                              dropdownColor: mobileBackgroundColor,
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              style: const TextStyle(
+                                  color: primaryGray, fontSize: 24),
+                              onChanged: (String? value) {
+                                // This is called when the user selects an item.
+                                setState(() {
+                                  categoryValue = value!;
+                                });
+                              },
+                              items: currentCategoryList
+                                  .map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value,
+                                      style: TextStyle(fontSize: 24)),
+                                );
+                              }).toList(),
+                              isExpanded: true,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -368,23 +427,31 @@ class _MoneyInState extends State<MoneyIn> {
                   Row(
                     children: [
                       Expanded(
-                        child: DropdownButton<String>(
-                          value: dropdownValue,
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          style: const TextStyle(color: primaryWhite),
-                          onChanged: (String? value) {
-                            // This is called when the user selects an item.
-                            setState(() {
-                              dropdownValue = value!;
-                            });
-                          },
-                          items: list
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                        child: Column(
+                          children: [
+                            DropdownButton<String>(
+                              value: dropdownValue,
+                              dropdownColor: mobileBackgroundColor,
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              style: const TextStyle(
+                                  color: primaryGray, fontSize: 24),
+                              onChanged: (String? value) {
+                                // This is called when the user selects an item.
+                                setState(() {
+                                  dropdownValue = value!;
+                                });
+                              },
+                              items: paymentList.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value,
+                                      style: TextStyle(fontSize: 24)),
+                                );
+                              }).toList(),
+                              isExpanded: true,
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -408,8 +475,8 @@ class _MoneyInState extends State<MoneyIn> {
                           String description = descriptionController.text;
                           double amount = double.parse(amountController.text);
                           String date = dateController.text;
-                          String category = categoryController.text;
-                          String payment = paymentController.text;
+                          String category = categoryValue;
+                          String payment = dropdownValue;
                           String type = "Income";
                           firestorService.addTransaction(description, amount,
                               date, category, payment, type);
@@ -417,8 +484,6 @@ class _MoneyInState extends State<MoneyIn> {
                           descriptionController.clear();
                           amountController.clear();
                           dateController.clear();
-                          categoryController.clear();
-                          paymentController.clear();
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -447,8 +512,8 @@ class _MoneyInState extends State<MoneyIn> {
                           String description = descriptionController.text;
                           double amount = double.parse(amountController.text);
                           String date = dateController.text;
-                          String category = categoryController.text;
-                          String payment = paymentController.text;
+                          String category = categoryValue;
+                          String payment = dropdownValue;
                           String type = "Expenses";
                           firestorService.addTransaction(description, amount,
                               date, category, payment, type);
@@ -456,8 +521,6 @@ class _MoneyInState extends State<MoneyIn> {
                           descriptionController.clear();
                           amountController.clear();
                           dateController.clear();
-                          categoryController.clear();
-                          paymentController.clear();
                         }
                       },
                       style: ElevatedButton.styleFrom(
