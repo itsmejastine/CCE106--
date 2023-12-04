@@ -43,7 +43,7 @@ class MoneyIn extends StatefulWidget {
 
 class _MoneyInState extends State<MoneyIn> {
   //firestore
-  final FirestoreService firestorService = FirestoreService();
+  final FirestoreService firestoreService = FirestoreService();
 
   //Calling dropdown
   String dropdownValue = paymentList.first;
@@ -65,6 +65,88 @@ class _MoneyInState extends State<MoneyIn> {
         }
       }
     });
+  }
+
+  void addIncome() {
+    if (moneyformKey.currentState!.validate()) {
+      String description = descriptionController.text;
+      double amount = double.parse(amountController.text);
+      String date = dateController.text;
+      String category = categoryValue;
+      String payment = dropdownValue;
+      String type = "Income";
+      firestoreService.addTransaction(
+          description, amount, date, category, payment, type);
+
+      descriptionController.clear();
+      amountController.clear();
+      dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
+    }
+  }
+
+  void addExpenses() {
+    if (moneyformKey.currentState!.validate()) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          });
+      String description = descriptionController.text;
+      double amount = double.parse(amountController.text);
+      String date = dateController.text;
+      String category = categoryValue;
+      String payment = dropdownValue;
+      String type = "Expenses";
+
+      try {
+        firestoreService.addTransaction(
+            description, amount, date, category, payment, type);
+
+        Navigator.pop(context);
+
+        transactionSucces(context);
+        Future.delayed(const Duration(seconds: 5), () {
+          Navigator.pushNamed(context, 'transact');
+        });
+      } on Exception catch (e) {
+        Navigator.pop(context);
+        errorMessage(e);
+        // TODO
+      }
+      descriptionController.clear();
+      amountController.clear();
+      dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
+    }
+  }
+
+  void errorMessage(error) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: mobileBackgroundColor,
+            title: Column(
+              children: [
+                const Icon(
+                  Icons.error_outline,
+                  color: primaryRed,
+                  size: 90,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Text(error, style: const TextStyle(color: primaryWhite)),
+              ],
+            ),
+          );
+        });
+  }
+
+  void transactionSucces(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Success()));
   }
 
   //text controllers
@@ -114,7 +196,7 @@ class _MoneyInState extends State<MoneyIn> {
                     child: OutlinedButton(
                       onPressed: () {
                         setState(() {
-                          moneyInButton = Color.fromRGBO(21, 160, 39, 80);
+                          moneyInButton = const Color.fromRGBO(21, 160, 39, 80);
                           moneyOutButton = mobileBackgroundColor;
                           moneyInText = primaryWhite;
                           moneyOutText = primaryGray;
@@ -153,7 +235,8 @@ class _MoneyInState extends State<MoneyIn> {
                       onPressed: () {
                         setState(() {
                           moneyInButton = mobileBackgroundColor;
-                          moneyOutButton = Color.fromRGBO(255, 88, 88, 80);
+                          moneyOutButton =
+                              const Color.fromRGBO(255, 88, 88, 80);
                           moneyOutFontWeight = FontWeight.bold;
                           moneyInFontWeight = FontWeight.normal;
                           moneyOutText = primaryWhite;
@@ -404,7 +487,7 @@ class _MoneyInState extends State<MoneyIn> {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value,
-                                      style: TextStyle(fontSize: 24)),
+                                      style: const TextStyle(fontSize: 24)),
                                 );
                               }).toList(),
                               isExpanded: true,
@@ -456,7 +539,7 @@ class _MoneyInState extends State<MoneyIn> {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value,
-                                      style: TextStyle(fontSize: 24)),
+                                      style: const TextStyle(fontSize: 24)),
                                 );
                               }).toList(),
                               isExpanded: true,
@@ -481,21 +564,7 @@ class _MoneyInState extends State<MoneyIn> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (moneyformKey.currentState!.validate()) {
-                          String description = descriptionController.text;
-                          double amount = double.parse(amountController.text);
-                          String date = dateController.text;
-                          String category = categoryValue;
-                          String payment = dropdownValue;
-                          String type = "Income";
-                          firestorService.addTransaction(description, amount,
-                              date, category, payment, type);
-
-                          descriptionController.clear();
-                          amountController.clear();
-                          dateController.text =
-                              DateFormat('MM-dd-yyyy').format(DateTime.now());
-                        }
+                        addIncome();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryGreen,
@@ -519,21 +588,7 @@ class _MoneyInState extends State<MoneyIn> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (moneyformKey.currentState!.validate()) {
-                          String description = descriptionController.text;
-                          double amount = double.parse(amountController.text);
-                          String date = dateController.text;
-                          String category = categoryValue;
-                          String payment = dropdownValue;
-                          String type = "Expenses";
-                          firestorService.addTransaction(description, amount,
-                              date, category, payment, type);
-
-                          descriptionController.clear();
-                          amountController.clear();
-                          dateController.text =
-                              DateFormat('MM-dd-yyyy').format(DateTime.now());
-                        }
+                        addExpenses();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryRed,

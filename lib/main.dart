@@ -5,10 +5,12 @@ import 'package:flutter_it14proj/loginPage.dart';
 import 'package:flutter_it14proj/colors.dart';
 import 'package:flutter_it14proj/moneyIn.dart';
 import 'package:flutter_it14proj/navBar.dart';
+import 'package:flutter_it14proj/new.dart';
 import 'package:flutter_it14proj/profile.dart';
 import 'package:flutter_it14proj/registerPage.dart';
 import 'package:flutter_it14proj/splash%20pages/splash.dart';
 import 'package:flutter_it14proj/splash%20pages/success.dart';
+import 'package:flutter_it14proj/transactionPage.dart';
 import 'package:flutter_it14proj/viewGoal.dart';
 import 'package:flutter_it14proj/viewTransaction.dart';
 import 'package:flutter_it14proj/welcomePage.dart';
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         //  textTheme: GoogleFonts.inter(Theme.of(context).textTheme.displaySmall)
       ),
-      home: const MoneyIn(),
+      home: const New(),
       routes: {
         'welcomePage': (context) => const WelcomePage(),
         'loginPage': (context) => const LoginPage(),
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
         'viewGoal': (context) => const ViewGoal(),
         'moneyIn': (context) => const MoneyIn(),
         'register': (context) => const RegisterPage(),
-
+        'transact': (context) => const New(),
         //add routes here
       },
     );
