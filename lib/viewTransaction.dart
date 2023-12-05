@@ -17,6 +17,48 @@ class _ViewTransactionState extends State<ViewTransaction> {
   final FirestoreService firestoreService = FirestoreService();
 
   late Stream<DocumentSnapshot<Map<String, dynamic>>> transactionStream;
+  void deleteModal() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              backgroundColor: mobileBackgroundColor,
+              title: const Icon(
+                Icons.delete_forever_outlined,
+                color: primaryRed,
+                size: 108,
+              ),
+              content: const Text('Are you sure to delete this transaction?',
+                  style: TextStyle(color: primaryWhite)),
+              actionsAlignment: MainAxisAlignment.center,
+              actions: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      firestoreService.deleteTransaction('${widget.docID}');
+                      Navigator.pushNamed(context, 'transact');
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryGreen,
+                        foregroundColor: primaryWhite),
+                    child: const Text('Yes'),
+                  ),
+                ),
+                const Spacer(),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryGray,
+                        foregroundColor: primaryWhite),
+                    child: const Text('No'),
+                  ),
+                )
+              ]);
+        });
+  }
 
   String appBarText = "Money In";
 
@@ -55,11 +97,11 @@ class _ViewTransactionState extends State<ViewTransaction> {
                 stream: transactionStream,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (!snapshot.hasData || snapshot.data == null) {
-                    return Center(child: Text('No data available'));
+                    return const Center(child: Text('No data available'));
                   } else {
                     final data = snapshot.data!.data() as Map<String, dynamic>;
 
@@ -126,7 +168,7 @@ class _ViewTransactionState extends State<ViewTransaction> {
                                       elevation: 0,
                                     ),
                                     onPressed: () {},
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.edit,
                                       color: primaryGray,
                                     ),
@@ -140,8 +182,10 @@ class _ViewTransactionState extends State<ViewTransaction> {
                                       backgroundColor: Colors.transparent,
                                       elevation: 0,
                                     ),
-                                    onPressed: () {},
-                                    icon: Icon(
+                                    onPressed: () {
+                                      deleteModal();
+                                    },
+                                    icon: const Icon(
                                       Icons.delete,
                                       color: primaryGray,
                                     ),

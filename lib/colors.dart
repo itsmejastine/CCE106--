@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_it14proj/moneyIn.dart';
+import 'package:flutter_it14proj/addTransaction.dart';
 
 //primary colors
 const mobileBackgroundColor = Color.fromRGBO(35, 35, 35, 1);

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/authenticator.dart';
 import 'package:flutter_it14proj/loginPage.dart';
 import 'package:flutter_it14proj/colors.dart';
-import 'package:flutter_it14proj/moneyIn.dart';
+import 'package:flutter_it14proj/addTransaction.dart';
 import 'package:flutter_it14proj/navBar.dart';
 import 'package:flutter_it14proj/transactionPage.dart';
 import 'package:flutter_it14proj/profile.dart';

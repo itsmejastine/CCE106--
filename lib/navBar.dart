@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/colors.dart';
 import 'package:flutter_it14proj/loginPage.dart';
-import 'package:flutter_it14proj/moneyIn.dart';
+import 'package:flutter_it14proj/addTransaction.dart';
 import 'package:flutter_it14proj/profile.dart';
 import 'package:flutter_it14proj/viewGoal.dart';
 import 'package:flutter_it14proj/welcomePage.dart';

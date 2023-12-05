@@ -14,29 +14,29 @@ class Success extends StatefulWidget {
 }
 
 class _SuccessState extends State<Success> with SingleTickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        const GradientIcon(
-            icon: Icons.task_outlined,
-            size: 165,
-            gradient: LinearGradient(colors: [gradientGreen, gradientYellow])),
+        const Icon(
+          Icons.delete_forever_outlined,
+          size: 165,
+          color: primaryRed,
+        ),
         const SizedBox(
           height: 28,
         ),
         SizedBox(
           width: 350,
-          child: GradientText(
-            "Transaction successfully made",
+          child: Text(
+            "Transaction is deleted succesfully",
             textAlign: TextAlign.center,
-            colors: const [gradientGreen, gradientYellow],
             style: GoogleFonts.inter(
               textStyle: Theme.of(context).textTheme.displayLarge,
               fontSize: 32,
               fontWeight: FontWeight.bold,
+              color: primaryWhite,
             ),
           ),
         )

@@ -186,14 +186,15 @@ class _NewState extends State<New> {
           ),
 
           const SizedBox(height: 40),
-          const Row(
+          Row(
             children: [
               Text(
                 'Transactions',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+                style: GoogleFonts.inter(
+                  textStyle: Theme.of(context).textTheme.displaySmall,
+                  fontSize: 20,
                   color: primaryWhite,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               Expanded(
@@ -201,8 +202,9 @@ class _NewState extends State<New> {
                   alignment: Alignment.centerRight,
                   child: Text(
                     'October 2023 v',
-                    style: TextStyle(
-                      fontSize: 16.0,
+                    style: GoogleFonts.inter(
+                      textStyle: Theme.of(context).textTheme.displaySmall,
+                      fontSize: 16,
                       color: primaryWhite,
                     ),
                   ),
@@ -238,11 +240,14 @@ class _NewState extends State<New> {
                         String dateText = data['date'];
                         String amount = data['amount'].toString();
                         String type = data['type'];
+                        String amountText = '';
 
                         if (type == 'Expenses') {
                           amountTextColor = primaryRed;
+                          amountText = "- Php $amount";
                         } else {
                           amountTextColor = primaryGreen;
+                          amountText = "+ Php $amount";
                         }
 
                         return Expanded(
@@ -256,15 +261,32 @@ class _NewState extends State<New> {
                             },
                             title: Text(
                               transactionText,
-                              style: const TextStyle(color: primaryWhite),
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 16,
+                                color: primaryWhite,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                             subtitle: Text(
                               dateText,
-                              style: const TextStyle(color: primaryWhite),
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 12,
+                                color: primaryWhite,
+                              ),
                             ),
                             trailing: Text(
-                              'Php $amount',
-                              style: TextStyle(color: amountTextColor, ),
+                              amountText,
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 16,
+                                color: amountTextColor,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         );
