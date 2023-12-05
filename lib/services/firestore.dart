@@ -28,7 +28,8 @@ class FirestoreService {
     return transactionStream;
   }
 
-  //READ INIDIVIDUALLY
+  //READ INDIVIDUALLY
+  
 
   //UPDATE
   Future<void> updateTransaction(String docID, String description, double amount, String date,
@@ -44,5 +45,9 @@ class FirestoreService {
     });
   }
 
+  //DELETE
+  Future<void> deleteTransaction(String docID){
+    return transaction.doc(docID).delete();
+  }
   
 }

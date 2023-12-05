@@ -237,6 +237,13 @@ class _NewState extends State<New> {
                         String transactionText = data['description'];
                         String dateText = data['date'];
                         String amount = data['amount'].toString();
+                        String type = data['type'];
+
+                        if (type == 'Expenses') {
+                          amountTextColor = primaryRed;
+                        } else {
+                          amountTextColor = primaryGreen;
+                        }
 
                         return Expanded(
                           child: ListTile(
@@ -257,7 +264,7 @@ class _NewState extends State<New> {
                             ),
                             trailing: Text(
                               'Php $amount',
-                              style: const TextStyle(color: primaryWhite),
+                              style: TextStyle(color: amountTextColor, ),
                             ),
                           ),
                         );

@@ -18,7 +18,7 @@ class _ViewTransactionState extends State<ViewTransaction> {
 
   late Stream<DocumentSnapshot<Map<String, dynamic>>> transactionStream;
 
-  String appBarText = "Money Out";
+  String appBarText = "Money In";
 
   @override
   void initState() {
@@ -63,6 +63,31 @@ class _ViewTransactionState extends State<ViewTransaction> {
                   } else {
                     final data = snapshot.data!.data() as Map<String, dynamic>;
 
+                    String description = data['description'];
+                    String amount = data['amount'].toString();
+                    String date = data['date'];
+                    String category = data['category'];
+                    String payment = data['payment'];
+                    String type = data['type'];
+
+                    if (type == 'Expenses') {
+                      Future.delayed(Duration.zero, () {
+                        setState(() {
+                          appBarText = 'Money Out';
+                          appBarBgColor = primaryRed;
+                          amountTextColor = primaryRed;
+                        });
+                      });
+                    } else {
+                      Future.delayed(Duration.zero, () {
+                        setState(() {
+                          appBarText;
+                          appBarBgColor = primaryGreen;
+                          amountTextColor = primaryGreen;
+                        });
+                      });
+                    }
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -83,7 +108,7 @@ class _ViewTransactionState extends State<ViewTransaction> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Php ${data['amount']}",
+                              "Php $amount",
                               style: GoogleFonts.inter(
                                 textStyle:
                                     Theme.of(context).textTheme.displaySmall,
@@ -95,30 +120,35 @@ class _ViewTransactionState extends State<ViewTransaction> {
                             const Spacer(),
                             Row(
                               children: [
-                                IconButton(
+                                ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                    ),
                                     onPressed: () {},
                                     icon: Icon(
                                       Icons.edit,
                                       color: primaryGray,
+                                    ),
+                                    label: const Text(
+                                      'Edit',
+                                      style: TextStyle(color: primaryGray),
                                     )),
-                                const Text(
-                                  'Edit',
-                                  style: TextStyle(color: primaryGray),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                IconButton(
+                                //
+                                ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                    ),
                                     onPressed: () {},
                                     icon: Icon(
                                       Icons.delete,
                                       color: primaryGray,
+                                    ),
+                                    label: const Text(
+                                      'Delete',
+                                      style: TextStyle(color: primaryGray),
                                     )),
-                                const Text(
-                                  'Delete',
-                                  style: TextStyle(color: primaryGray),
-                                )
                               ],
                             )
                           ],
@@ -139,7 +169,7 @@ class _ViewTransactionState extends State<ViewTransaction> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              "${data['description']}",
+                              description,
                               style: GoogleFonts.inter(
                                 textStyle:
                                     Theme.of(context).textTheme.displaySmall,
@@ -166,7 +196,7 @@ class _ViewTransactionState extends State<ViewTransaction> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              "${data['description']}",
+                              date,
                               style: GoogleFonts.inter(
                                 textStyle:
                                     Theme.of(context).textTheme.displaySmall,
@@ -193,7 +223,7 @@ class _ViewTransactionState extends State<ViewTransaction> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              "${data['category']}",
+                              category,
                               style: GoogleFonts.inter(
                                 textStyle:
                                     Theme.of(context).textTheme.displaySmall,
@@ -220,7 +250,7 @@ class _ViewTransactionState extends State<ViewTransaction> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              "${data['payment']}",
+                              payment,
                               style: GoogleFonts.inter(
                                 textStyle:
                                     Theme.of(context).textTheme.displaySmall,
