@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_it14proj/colors.dart';
+import 'package:flutter_it14proj/components/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 

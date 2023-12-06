@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_it14proj/colors.dart';
+import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
-import 'package:flutter_it14proj/viewTransaction.dart';
+import 'package:flutter_it14proj/transaction%20pages/viewTransaction.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class New extends StatefulWidget {
@@ -294,7 +294,15 @@ class _NewState extends State<New> {
                     );
                   } //if there is no data
                   else {
-                    return const Text('No transactions Yet..');
+                    return Text(
+                      'No transactions Yet..',
+                      style: GoogleFonts.inter(
+                        textStyle: Theme.of(context).textTheme.displaySmall,
+                        fontSize: 20,
+                        color: primaryWhite,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    );
                   }
                 })),
           ),

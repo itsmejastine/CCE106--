@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_it14proj/loginPage.dart';
+import 'package:flutter_it14proj/Auth/loginPage.dart';
 import 'package:flutter_it14proj/profile.dart';
 
 //to check if the user is signed in  or not

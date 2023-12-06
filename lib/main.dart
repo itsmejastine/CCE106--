@@ -1,19 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_it14proj/authenticator.dart';
-import 'package:flutter_it14proj/loginPage.dart';
-import 'package:flutter_it14proj/colors.dart';
-import 'package:flutter_it14proj/addTransaction.dart';
-import 'package:flutter_it14proj/navBar.dart';
-import 'package:flutter_it14proj/transactionPage.dart';
+import 'package:flutter_it14proj/Auth/authenticator.dart';
+import 'package:flutter_it14proj/Auth/loginPage.dart';
+import 'package:flutter_it14proj/components/colors.dart';
+import 'package:flutter_it14proj/splash%20pages/update.dart';
+import 'package:flutter_it14proj/transaction%20pages/addTransaction.dart';
+import 'package:flutter_it14proj/components/navBar.dart';
+import 'package:flutter_it14proj/transaction%20pages/transactionPage.dart';
 import 'package:flutter_it14proj/profile.dart';
-import 'package:flutter_it14proj/registerPage.dart';
+import 'package:flutter_it14proj/Auth/registerPage.dart';
 import 'package:flutter_it14proj/splash%20pages/splash.dart';
-import 'package:flutter_it14proj/splash%20pages/success.dart';
 import 'package:flutter_it14proj/viewGoal.dart';
-import 'package:flutter_it14proj/viewTransaction.dart';
+import 'package:flutter_it14proj/transaction%20pages/viewTransaction.dart';
 import 'package:flutter_it14proj/welcomePage.dart';
 import 'firebase_options.dart';
+import 'package:flutter_it14proj/transaction%20pages/updateTransaction.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         'moneyIn': (context) => const MoneyIn(),
         'register': (context) => const RegisterPage(),
         'transact': (context) => const New(),
+        'splashUpdate': (context) => SplashUpdate(context),
         //add routes here
       },
     );

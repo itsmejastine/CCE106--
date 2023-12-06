@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_it14proj/addTransaction.dart';
+import 'package:flutter_it14proj/transaction%20pages/addTransaction.dart';
 
 //primary colors
 const mobileBackgroundColor = Color.fromRGBO(35, 35, 35, 1);
@@ -15,12 +15,15 @@ const textGreen = Color.fromRGBO(30, 30, 30, 1);
 const gradientGreen = Color.fromRGBO(21, 160, 39, 1);
 const gradientYellow = Color.fromRGBO(241, 219, 17, 1);
 
+//Less opacity
+const green200 = Color.fromRGBO(21, 160, 39, 80);
+
 //moneyIn-Out Button
-Color moneyInButton = Color.fromRGBO(21, 160, 39, 80);
+Color moneyInButton = mobileBackgroundColor;
 Color moneyOutButton = mobileBackgroundColor;
 Color moneyOutText = primaryGray;
-Color moneyInText = primaryWhite;
-Color moneyInBorder = primaryGreen;
+Color moneyInText = primaryGray;
+Color moneyInBorder = primaryGray;
 Color moneyOutBorder = primaryGray;
 
 Color appBarBgColor = primaryGreen;

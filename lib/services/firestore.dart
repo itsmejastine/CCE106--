@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class FirestoreService {
-
 //get collection from users
   final CollectionReference transaction =
       FirebaseFirestore.instance.collection('transaction');
@@ -29,11 +28,10 @@ class FirestoreService {
   }
 
   //READ INDIVIDUALLY
-  
 
   //UPDATE
-  Future<void> updateTransaction(String docID, String description, double amount, String date,
-      String category, String payment, String type) {
+  Future<void> updateTransaction(String docID, String description,
+      double amount, String date, String category, String payment) {
     return transaction.doc(docID).update({
       'description': description,
       'amount': amount,
@@ -41,13 +39,11 @@ class FirestoreService {
       'category': category,
       'payment': payment,
       'balance': amount,
-      'type': type
     });
   }
 
   //DELETE
-  Future<void> deleteTransaction(String docID){
+  Future<void> deleteTransaction(String docID) {
     return transaction.doc(docID).delete();
   }
-  
 }

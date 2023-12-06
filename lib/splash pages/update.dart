@@ -2,23 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SplashDelete extends StatefulWidget {
-  const SplashDelete(BuildContext context, {super.key});
+class SplashUpdate extends StatefulWidget {
+  const SplashUpdate(BuildContext context, {super.key});
 
   @override
-  State<SplashDelete> createState() => _SplashDeleteState();
+  State<SplashUpdate> createState() => _SplashUpdateState();
 }
 
-class _SplashDeleteState extends State<SplashDelete> with SingleTickerProviderStateMixin {
+class _SplashUpdateState extends State<SplashUpdate>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         const Icon(
-          Icons.delete_forever_outlined,
+          Icons.edit_document,
           size: 165,
-          color: primaryRed,
+          color: primaryGreen,
         ),
         const SizedBox(
           height: 28,
@@ -26,7 +27,7 @@ class _SplashDeleteState extends State<SplashDelete> with SingleTickerProviderSt
         SizedBox(
           width: 350,
           child: Text(
-            "Transaction is deleted succesfully",
+            "Transaction Updated",
             textAlign: TextAlign.center,
             style: GoogleFonts.inter(
               textStyle: Theme.of(context).textTheme.displayLarge,

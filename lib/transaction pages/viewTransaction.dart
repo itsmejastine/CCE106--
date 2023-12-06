@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_it14proj/colors.dart';
+import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
+import 'package:flutter_it14proj/transaction%20pages/updateTransaction.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ViewTransaction extends StatefulWidget {
@@ -167,7 +168,15 @@ class _ViewTransactionState extends State<ViewTransaction> {
                                       backgroundColor: Colors.transparent,
                                       elevation: 0,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UpdateTransaction(
+                                                      docID:
+                                                          '${widget.docID}')));
+                                    },
                                     icon: const Icon(
                                       Icons.edit,
                                       color: primaryGray,

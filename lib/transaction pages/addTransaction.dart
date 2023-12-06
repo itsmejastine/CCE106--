@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_it14proj/colors.dart';
+import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
 import 'package:flutter_it14proj/splash%20pages/success.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -75,12 +75,24 @@ class _MoneyInState extends State<MoneyIn> {
       String category = categoryValue;
       String payment = dropdownValue;
       String type = "Income";
-      firestoreService.addTransaction(
-          description, amount, date, category, payment, type);
+      try {
+        firestoreService.addTransaction(
+            description, amount, date, category, payment, type);
+        descriptionController.clear();
+        amountController.clear();
+        dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
+        Navigator.pop(context);
 
-      descriptionController.clear();
-      amountController.clear();
-      dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
+        transactionSucces(context);
+
+        Future.delayed(const Duration(seconds: 5), () {
+          Navigator.pushNamed(context, 'transact');
+        });
+      } on Exception catch (e) {
+        Navigator.pop(context);
+        errorMessage(e);
+        // TODO
+      }
     }
   }
 
@@ -103,10 +115,13 @@ class _MoneyInState extends State<MoneyIn> {
       try {
         firestoreService.addTransaction(
             description, amount, date, category, payment, type);
-
+        descriptionController.clear();
+        amountController.clear();
+        dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
         Navigator.pop(context);
 
         transactionSucces(context);
+
         Future.delayed(const Duration(seconds: 5), () {
           Navigator.pushNamed(context, 'transact');
         });
@@ -115,9 +130,6 @@ class _MoneyInState extends State<MoneyIn> {
         errorMessage(e);
         // TODO
       }
-      descriptionController.clear();
-      amountController.clear();
-      dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
     }
   }
 
