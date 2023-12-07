@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
@@ -38,8 +39,8 @@ const List<String> expensesList = <String>[
 ];
 
 class UpdateTransaction extends StatefulWidget {
-  final String? docID;
-  const UpdateTransaction({Key? key, this.docID}) : super(key: key);
+  final String? updateID;
+  const UpdateTransaction({Key? key, this.updateID}) : super(key: key);
 
   @override
   State<UpdateTransaction> createState() => _UpdateTransactionState();
@@ -55,6 +56,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
   String categoryValue = incomeList.first;
   List<String> currentCategoryList = incomeList;
   bool isState = true;
+  String currentDate = '';
 
   //button change
   void buttonState(bool state) {
@@ -92,7 +94,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
 
   void saveTransaction() {
     if (moneyformKey.currentState!.validate()) {
-      String id = '${widget.docID}';
+      String id = '${widget.updateID}';
       String description = descriptionController.text;
       double amount = double.parse(amountController.text);
       String date = dateController.text;
@@ -144,7 +146,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
     dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
     updateStream = FirebaseFirestore.instance
         .collection("transaction")
-        .doc(widget.docID)
+        .doc(widget.updateID)
         .snapshots();
   }
 
@@ -192,7 +194,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                     width: 190,
                     child: FloatingActionButton.extended(
                       onPressed: () {
-                        Navigator.pushNamed(context, 'moneyIn');
+                        Navigator.pop(context);
                       },
                       label: Text(
                         'Cancel',
@@ -225,7 +227,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                   final data = snapshot.data!.data() as Map<String, dynamic>;
                   descriptionController.text = data['description'];
                   amountController.text = data['amount'].toString();
-                  dateController.text = data['date'];
+                  currentDate = data['date']; 
                   String category = data['category'];
                   categoryValue = category;
                   String payment = data['payment'];
@@ -445,7 +447,8 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                                   }
                                   return null;
                                 },
-                                readOnly: true,
+
+                                // readOnly: true,
                                 style: const TextStyle(
                                     fontSize: 24,
                                     color: primaryWhite,
@@ -464,17 +467,20 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                                       lastDate: DateTime(2100));
 
                                   if (pickedDate != null) {
-                                    print(pickedDate);
                                     String formattedDate =
                                         DateFormat('MM-dd-yyyy')
                                             .format(pickedDate);
 
-                                    print(formattedDate);
+                                    dateController.text = formattedDate;
+
+                                    String newDate = formattedDate;
+
+                                    print(newDate);
 
                                     setState(() {
-                                      dateController.text = formattedDate;
+                                      dateController.text = newDate;
                                     });
-                                  } else {}
+                                  }
                                 },
                               ),
                             ],
@@ -513,11 +519,14 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                                     icon: const Icon(Icons.keyboard_arrow_down),
                                     style: const TextStyle(
                                         color: primaryGray, fontSize: 24),
-                                    onChanged: (String? value) {
+                                    onChanged: (String? newValue) {
                                       // This is called when the user selects an item.
                                       setState(() {
-                                        categoryValue = value!;
+                                        categoryValue = newValue!;
                                       });
+                                      if (kDebugMode) {
+                                        print(categoryValue);
+                                      }
                                     },
                                     items: currentCategoryList
                                         .map<DropdownMenuItem<String>>(
@@ -569,10 +578,10 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                                     icon: const Icon(Icons.keyboard_arrow_down),
                                     style: const TextStyle(
                                         color: primaryGray, fontSize: 24),
-                                    onChanged: (String? value) {
+                                    onChanged: (String? newValue) {
                                       // This is called when the user selects an item.
                                       setState(() {
-                                        dropdownValue = value!;
+                                        dropdownValue = newValue!;
                                       });
                                     },
                                     items: paymentList

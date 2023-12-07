@@ -174,7 +174,7 @@ class _ViewTransactionState extends State<ViewTransaction> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   UpdateTransaction(
-                                                      docID:
+                                                      updateID:
                                                           '${widget.docID}')));
                                     },
                                     icon: const Icon(

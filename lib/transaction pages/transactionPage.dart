@@ -14,6 +14,15 @@ class New extends StatefulWidget {
 
 class _NewState extends State<New> {
   final FirestoreService firestoreService = FirestoreService();
+  late Future<double> totalIncome;
+  late Future<double> totalExpense;
+  @override
+  void initState() {
+    super.initState();
+    totalIncome = firestoreService.totalIncome();
+    totalExpense = firestoreService.totalExpenses();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,10 +135,10 @@ class _NewState extends State<New> {
                 ),
                 padding: const EdgeInsets.all(20.0),
                 alignment: Alignment.topLeft,
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Total Income',
                       style: TextStyle(
                         fontSize: 16,
@@ -137,14 +146,34 @@ class _NewState extends State<New> {
                         color: primaryWhite,
                       ),
                     ),
-                    SizedBox(height: 8),
-                    Text(
-                      'P70,000.00',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: primaryGreen,
-                      ),
+                    const SizedBox(height: 8),
+                    FutureBuilder<double>(
+                      future: totalIncome,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Text(
+                            'Calculating...',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: primaryGreen,
+                            ),
+                          ); // Show a loader while fetching data
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          // Display the fetched total income in a Text widget
+                          return Text(
+                            'Php ${snapshot.data}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: primaryGreen,
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -159,7 +188,7 @@ class _NewState extends State<New> {
                 ),
                 padding: const EdgeInsets.all(20.0),
                 alignment: Alignment.topLeft,
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -171,13 +200,33 @@ class _NewState extends State<New> {
                       ),
                     ),
                     SizedBox(height: 8),
-                    Text(
-                      'P70,000.00',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: primaryRed,
-                      ),
+                    FutureBuilder<double>(
+                      future: totalExpense,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Text(
+                            'Calculating...',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: primaryGreen,
+                            ),
+                          ); // Show a loader while fetching data
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          // Display the fetched total income in a Text widget
+                          return Text(
+                            'Php ${snapshot.data}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: primaryRed,
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
