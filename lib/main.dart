@@ -42,12 +42,10 @@ class MyApp extends StatelessWidget {
       home: const Authenticator(),
       routes: {
         'welcomePage': (context) => const WelcomePage(),
-        'loginPage': (context) => const LoginPage(),
         'profilePage': (context) => const ProfilePage(),
         'navBarPage': (context) => NavBarPage(initialIndex: 0),
         'viewGoal': (context) => const ViewGoal(),
         'moneyIn': (context) => const MoneyIn(),
-        'register': (context) => const RegisterPage(),
         'transact': (context) => const New(),
         'splashUpdate': (context) => SplashUpdate(context),
         'splashAdd': (context) => Success(context),

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it14proj/Auth/LoginOrRegister.dart';
 import 'package:flutter_it14proj/Auth/loginPage.dart';
 import 'package:flutter_it14proj/components/navBar.dart';
 import 'package:flutter_it14proj/profile.dart';
@@ -21,7 +22,7 @@ class Authenticator extends StatelessWidget {
           }
           //user is NOT logged in
           else {
-            return LoginPage();
+            return LoginOrRegister();
           }
         },
       ),

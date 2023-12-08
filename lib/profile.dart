@@ -12,30 +12,19 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-//Document IDs
-  List<String> docIDs = [];
-
-//get docIDs
-  // Future getDocID() async {
-  //   await FirebaseFirestore.instance
-  //       .collection('Users')
-  //       .get()
-  //       .then((snapshot) => snapshot.docs.forEach((documents) {
-  //             print(documents.reference);
-  //             docIDs.add(documents.reference.id);
-  //           }));
-  // }
-
   //logout user method
   void logUserOut() {
     FirebaseAuth.instance.signOut();
   }
 
-  @override
-  // void initState() {
-  //   getDocID();
-  //   super.initState();
-  // }
+  User? currentUser = FirebaseAuth.instance.currentUser;
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
+    return await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUser!.email)
+        .get();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 28,
               ),
               Column(
@@ -100,24 +89,44 @@ class _ProfilePageState extends State<ProfilePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'username',
-                        style: GoogleFonts.inter(
-                          textStyle: Theme.of(context).textTheme.displayMedium,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                          color: primaryWhite,
-                        ),
-                      ),
+                      Flexible(
+                          child: FutureBuilder<
+                              DocumentSnapshot<Map<String, dynamic>>>(
+                        future: getUserDetails(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Text("Error: ${snapshot.error}");
+                          } else if (snapshot.hasData) {
+                            Map<String, dynamic>? user = snapshot.data!.data();
+
+                            return Text(
+                              user!['username'],
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displayMedium,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
+                                color: primaryWhite,
+                              ),
+                            );
+                          } else {
+                            return const Text("No data");
+                          }
+                        },
+                      )),
                       IconButton(
                           onPressed: () {},
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.edit,
                             color: primaryGray,
                           ))
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 28,
                   ),
                   Container(
@@ -174,42 +183,62 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "email",
-                                    style: GoogleFonts.inter(
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .displaySmall,
-                                      fontSize: 16,
-                                      color: primaryWhite,
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      "email",
+                                      style: GoogleFonts.inter(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .displaySmall,
+                                        fontSize: 16,
+                                        color: primaryWhite,
+                                      ),
                                     ),
-                                  ),
-                                  Spacer(),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.edit,
-                                        color: primaryGray,
-                                      ))
-                                ],
-                              ),
-                              Text(
-                                "test@email.com",
-                                style: GoogleFonts.inter(
-                                  textStyle:
-                                      Theme.of(context).textTheme.displayMedium,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w700,
-                                  color: primaryWhite,
+                                    const Spacer(),
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          color: primaryGray,
+                                        ))
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
+                                Flexible(
+                                    child: FutureBuilder<
+                                        DocumentSnapshot<Map<String, dynamic>>>(
+                                  future: getUserDetails(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error: ${snapshot.error}");
+                                    } else if (snapshot.hasData) {
+                                      Map<String, dynamic>? user =
+                                          snapshot.data!.data();
+
+                                      return Text(
+                                        user!['email'],
+                                        style: GoogleFonts.inter(
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .displayMedium,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: primaryWhite,
+                                        ),
+                                      );
+                                    } else {
+                                      return const Text("No data");
+                                    }
+                                  },
+                                )),
+                              ]),
                         ),
                       ),
                       const SizedBox(
@@ -238,10 +267,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                       color: primaryWhite,
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   IconButton(
                                       onPressed: () {},
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.edit,
                                         color: primaryGray,
                                       ))

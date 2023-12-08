@@ -6,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final void Function()? onTap;
+  const LoginPage({super.key, required this.onTap});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -36,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
         //pop the loading circle
-        Navigator.pop(context);
+        if (context.mounted) Navigator.pop(context);
       } on FirebaseAuthException catch (e) {
         //pop the loading circle
         Navigator.pop(context);
@@ -103,6 +104,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
@@ -161,6 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 40,
                   ),
                   TextFormField(
+                    obscureText: true,
                     controller: passwordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -220,21 +229,20 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                InkWell(
-                    child: Text(
-                      'Register Now',
-                      style: GoogleFonts.inter(
-                        textStyle: Theme.of(context).textTheme.displaySmall,
-                        fontSize: 12,
-                        color: primaryGreen,
-                        decoration: TextDecoration.underline,
-                        decorationColor: primaryGreen,
-                      ),
-                      textAlign: TextAlign.center,
+                GestureDetector(
+                  onTap: widget.onTap,
+                  child: Text(
+                    'Register Now',
+                    style: GoogleFonts.inter(
+                      textStyle: Theme.of(context).textTheme.displaySmall,
+                      fontSize: 12,
+                      color: primaryGreen,
+                      decoration: TextDecoration.underline,
+                      decorationColor: primaryGreen,
                     ),
-                    onTap: () {
-                      Navigator.pushNamed(context, 'register');
-                    }) //add route of the register page
+                    textAlign: TextAlign.center,
+                  ),
+                ) //add route of the register page
               ],
             ),
           ],
