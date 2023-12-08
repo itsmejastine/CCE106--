@@ -5,7 +5,7 @@ import 'package:flutter_it14proj/welcomePage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Splash extends StatefulWidget {
-  const Splash({super.key});
+  const Splash(BuildContext context, {super.key});
 
   @override
   State<Splash> createState() => _SplashState();

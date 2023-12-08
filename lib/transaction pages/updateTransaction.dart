@@ -119,10 +119,6 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
     }
   }
 
-  void transactionSucces(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const Success()));
-  }
 
   //text controllers
   TextEditingController descriptionController = TextEditingController();

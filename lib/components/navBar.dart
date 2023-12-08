@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/Auth/loginPage.dart';
+import 'package:flutter_it14proj/home.dart';
 import 'package:flutter_it14proj/transaction%20pages/addTransaction.dart';
 import 'package:flutter_it14proj/profile.dart';
+import 'package:flutter_it14proj/transaction%20pages/transactionPage.dart';
 import 'package:flutter_it14proj/viewGoal.dart';
 import 'package:flutter_it14proj/welcomePage.dart';
 
 class NavBarPage extends StatefulWidget {
-  const NavBarPage({super.key});
+  final int initialIndex;
+
+  NavBarPage({Key? key, required this.initialIndex}) : super(key: key);
 
   @override
   State<NavBarPage> createState() => _NavBarPageState();
@@ -17,8 +21,8 @@ class _NavBarPageState extends State<NavBarPage> {
   int _currentIndex = 0;
 
   final pages = [
-    LoginPage(),
-    MoneyIn(),
+    Home(),
+    New(),
     ViewGoal(),
     ProfilePage()
   ]; //change it to its corresponding page
@@ -27,6 +31,12 @@ class _NavBarPageState extends State<NavBarPage> {
     setState(() {
       _currentIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex; // Set initial index in initState
   }
 
   @override

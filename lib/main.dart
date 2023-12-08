@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/Auth/authenticator.dart';
 import 'package:flutter_it14proj/Auth/loginPage.dart';
 import 'package:flutter_it14proj/components/colors.dart';
+import 'package:flutter_it14proj/splash%20pages/success.dart';
 import 'package:flutter_it14proj/splash%20pages/update.dart';
 import 'package:flutter_it14proj/transaction%20pages/addTransaction.dart';
 import 'package:flutter_it14proj/components/navBar.dart';
@@ -38,17 +39,18 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         //  textTheme: GoogleFonts.inter(Theme.of(context).textTheme.displaySmall)
       ),
-      home: const New(),
+      home: const Authenticator(),
       routes: {
         'welcomePage': (context) => const WelcomePage(),
         'loginPage': (context) => const LoginPage(),
         'profilePage': (context) => const ProfilePage(),
-        'navBarPage': (context) => const NavBarPage(),
+        'navBarPage': (context) => NavBarPage(initialIndex: 0),
         'viewGoal': (context) => const ViewGoal(),
         'moneyIn': (context) => const MoneyIn(),
         'register': (context) => const RegisterPage(),
         'transact': (context) => const New(),
         'splashUpdate': (context) => SplashUpdate(context),
+        'splashAdd': (context) => Success(context),
         //add routes here
       },
     );

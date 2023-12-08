@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
+import 'package:flutter_it14proj/components/navBar.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
 import 'package:flutter_it14proj/splash%20pages/success.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -81,12 +82,17 @@ class _MoneyInState extends State<MoneyIn> {
         descriptionController.clear();
         amountController.clear();
         dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
-        Navigator.pop(context);
-
-        transactionSucces(context);
+        Navigator.pushNamed(context, 'splashAdd');
 
         Future.delayed(const Duration(seconds: 5), () {
-          Navigator.pushNamed(context, 'transact');
+         Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => NavBarPage(
+                      initialIndex: 1,
+                    )),
+          );
         });
       } on Exception catch (e) {
         Navigator.pop(context);
@@ -118,12 +124,17 @@ class _MoneyInState extends State<MoneyIn> {
         descriptionController.clear();
         amountController.clear();
         dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
-        Navigator.pop(context);
-
-        transactionSucces(context);
+        Navigator.pushNamed(context, 'splashAdd');
 
         Future.delayed(const Duration(seconds: 5), () {
-          Navigator.pushNamed(context, 'transact');
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => NavBarPage(
+                      initialIndex: 1,
+                    )),
+          );
         });
       } on Exception catch (e) {
         Navigator.pop(context);
@@ -154,11 +165,6 @@ class _MoneyInState extends State<MoneyIn> {
             ),
           );
         });
-  }
-
-  void transactionSucces(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const Success()));
   }
 
   //text controllers

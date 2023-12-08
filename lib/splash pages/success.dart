@@ -7,7 +7,7 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
 class Success extends StatefulWidget {
-  const Success({super.key});
+  const Success(BuildContext context, {super.key});
 
   @override
   State<Success> createState() => _SuccessState();
