@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
@@ -16,6 +17,16 @@ class _NewState extends State<New> {
   final FirestoreService firestoreService = FirestoreService();
   late Future<double> totalIncome;
   late Future<double> totalExpense;
+
+  User? currentUser = FirebaseAuth.instance.currentUser;
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
+    return await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUser!.email)
+        .get();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -79,15 +90,33 @@ class _NewState extends State<New> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
-        child: Column(children: [
-          Text(
-            'Welcome User,',
-            style: GoogleFonts.inter(
-                textStyle: Theme.of(context).textTheme.displayMedium,
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: primaryWhite),
-          ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Flexible(
+              child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+            future: getUserDetails(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              } else if (snapshot.hasData) {
+                Map<String, dynamic>? user = snapshot.data!.data();
+
+                return Text(
+                  "Welcome ${user!['username']}",
+                  style: GoogleFonts.inter(
+                    textStyle: Theme.of(context).textTheme.displayMedium,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: primaryWhite,
+                  ),
+                );
+              } else {
+                return const Text("No data");
+              }
+            },
+          )),
+
           const SizedBox(height: 40),
           Text(
             'Overview',
@@ -112,14 +141,39 @@ class _NewState extends State<New> {
               borderRadius: BorderRadius.circular(16.0),
             ),
             alignment: Alignment.topLeft,
-            child: const Text(
-              'P100,000.00',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
+            child: Flexible(
+                child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+              future: getUserDetails(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text(
+                    "Calculating ...",
+                    style: GoogleFonts.inter(
+                      textStyle: Theme.of(context).textTheme.displayMedium,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: textGreen,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("Error: ${snapshot.error}");
+                } else if (snapshot.hasData) {
+                  Map<String, dynamic>? user = snapshot.data!.data();
+
+                  return Text(
+                    "Php  ${user!['balance']}",
+                    style: GoogleFonts.inter(
+                      textStyle: Theme.of(context).textTheme.displayMedium,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: textGreen,
+                    ),
+                  );
+                } else {
+                  return const Text("No data");
+                }
+              },
+            )),
           ),
 
           const SizedBox(height: 16),
@@ -210,7 +264,7 @@ class _NewState extends State<New> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: primaryGreen,
+                              color: primaryRed,
                             ),
                           ); // Show a loader while fetching data
                         } else if (snapshot.hasError) {

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
@@ -119,7 +120,6 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
     }
   }
 
-
   //text controllers
   TextEditingController descriptionController = TextEditingController();
   TextEditingController amountController = TextEditingController();
@@ -135,13 +135,16 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
 
   //formKey
   final moneyformKey = GlobalKey<FormState>();
+  User? currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
     super.initState();
     dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
     updateStream = FirebaseFirestore.instance
-        .collection("transaction")
+        .collection('Users')
+        .doc(currentUser!.email)
+        .collection('transaction')
         .doc(widget.updateID)
         .snapshots();
   }
@@ -223,7 +226,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                   final data = snapshot.data!.data() as Map<String, dynamic>;
                   descriptionController.text = data['description'];
                   amountController.text = data['amount'].toString();
-                  currentDate = data['date']; 
+                  currentDate = data['date'];
                   String category = data['category'];
                   categoryValue = category;
                   String payment = data['payment'];

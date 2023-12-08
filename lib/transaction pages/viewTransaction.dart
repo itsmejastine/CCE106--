@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
@@ -16,6 +17,7 @@ class ViewTransaction extends StatefulWidget {
 class _ViewTransactionState extends State<ViewTransaction> {
   //firestore
   final FirestoreService firestoreService = FirestoreService();
+  User? currentUser = FirebaseAuth.instance.currentUser;
 
   late Stream<DocumentSnapshot<Map<String, dynamic>>> transactionStream;
   void deleteModal() {
@@ -67,7 +69,9 @@ class _ViewTransactionState extends State<ViewTransaction> {
   void initState() {
     super.initState();
     transactionStream = FirebaseFirestore.instance
-        .collection("transaction")
+        .collection('Users')
+        .doc(currentUser!.email)
+        .collection('transaction')
         .doc(widget.docID)
         .snapshots();
   }

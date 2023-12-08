@@ -69,6 +69,8 @@ class _RegisterPageState extends State<RegisterPage> {
           .set({
         'email': userCredential.user!.email,
         'username': _userNameController.text,
+        'balance': 0.0,
+        'transactions':{""}
       });
     }
   }

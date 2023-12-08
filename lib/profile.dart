@@ -156,16 +156,46 @@ class _ProfilePageState extends State<ProfilePage> {
                               color: textGreen,
                             ),
                           ),
-                          Text(
-                            "PHP 100,000.00",
-                            style: GoogleFonts.inter(
-                              textStyle:
-                                  Theme.of(context).textTheme.displayMedium,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700,
-                              color: textGreen,
-                            ),
-                          ),
+                          Flexible(
+                              child: FutureBuilder<
+                                  DocumentSnapshot<Map<String, dynamic>>>(
+                            future: getUserDetails(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Text(
+                                  "Calculating ...",
+                                  style: GoogleFonts.inter(
+                                    textStyle: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w700,
+                                    color: textGreen,
+                                  ),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text("Error: ${snapshot.error}");
+                              } else if (snapshot.hasData) {
+                                Map<String, dynamic>? user =
+                                    snapshot.data!.data();
+
+                                return Text(
+                                  "Php  ${user!['balance']}",
+                                  style: GoogleFonts.inter(
+                                    textStyle: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w700,
+                                    color: textGreen,
+                                  ),
+                                );
+                              } else {
+                                return const Text("No data");
+                              }
+                            },
+                          )),
                         ],
                       ),
                     ),

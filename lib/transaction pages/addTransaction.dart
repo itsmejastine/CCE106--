@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/components/navBar.dart';
@@ -43,6 +45,8 @@ class MoneyIn extends StatefulWidget {
 }
 
 class _MoneyInState extends State<MoneyIn> {
+  User? currentUser = FirebaseAuth.instance.currentUser;
+
   //firestore
   final FirestoreService firestoreService = FirestoreService();
 
@@ -77,15 +81,15 @@ class _MoneyInState extends State<MoneyIn> {
       String payment = dropdownValue;
       String type = "Income";
       try {
-        firestoreService.addTransaction(
-            description, amount, date, category, payment, type);
+        firestoreService.addTransaction("${currentUser!.email}", description,
+            amount, date, category, payment, type);
         descriptionController.clear();
         amountController.clear();
         dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
         Navigator.pushNamed(context, 'splashAdd');
 
         Future.delayed(const Duration(seconds: 5), () {
-         Navigator.pop(context);
+          Navigator.pop(context);
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -119,8 +123,8 @@ class _MoneyInState extends State<MoneyIn> {
       String type = "Expenses";
 
       try {
-        firestoreService.addTransaction(
-            description, amount, date, category, payment, type);
+        firestoreService.addTransaction("${currentUser!.email}", description,
+            amount, date, category, payment, type);
         descriptionController.clear();
         amountController.clear();
         dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
