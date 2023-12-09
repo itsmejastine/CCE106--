@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_it14proj/Auth/authenticator.dart';
 import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/welcomePage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,13 +18,11 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    // Future.delayed(const Duration(seconds: 5), () {
-    //   Navigator.of(context).pushReplacement(
-    //     MaterialPageRoute(
-    //       builder: (_) => const WelcomePage(),
-    //     ),
-    //   );
-    // });
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => const Authenticator(),
+      ));
+    });
   }
 
   @override

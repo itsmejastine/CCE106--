@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_it14proj/Auth/LoginOrRegister.dart';
 import 'package:flutter_it14proj/components/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -64,37 +65,25 @@ class _WelcomePageState extends State<WelcomePage> {
               children: [
                 SizedBox(
                   height: 48,
-                  width: 170,
+                  width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'loginPage');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginOrRegister()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryGreen,
                       elevation: 0,
                     ),
                     child: const Text(
-                      "LOGIN",
+                      "Get Started",
                       style: TextStyle(color: primaryWhite),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 6,
-                ),
-                SizedBox(
-                  height: 48,
-                  width: 170,
-                  child: OutlinedButton(
-                    onPressed: () {},
-                    style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: primaryGreen)),
-                    child: const Text(
-                      "Register",
-                      style: TextStyle(color: primaryGreen),
-                    ),
-                  ),
-                )
               ],
             ),
             const SizedBox(
