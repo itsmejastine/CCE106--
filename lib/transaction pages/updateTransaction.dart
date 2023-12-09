@@ -49,7 +49,6 @@ class UpdateTransaction extends StatefulWidget {
 }
 
 class _UpdateTransactionState extends State<UpdateTransaction> {
-  late Stream<DocumentSnapshot<Map<String, dynamic>>> updateStream;
   //firestore
   final FirestoreService firestoreService = FirestoreService();
 
@@ -147,6 +146,8 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
   final moneyformKey = GlobalKey<FormState>();
   User? currentUser = FirebaseAuth.instance.currentUser;
 
+  late Stream<DocumentSnapshot<Map<String, dynamic>>> updateStream;
+
   @override
   void initState() {
     super.initState();
@@ -157,6 +158,14 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
         .collection('transaction')
         .doc(widget.updateID)
         .snapshots();
+  }
+
+  @override
+  void dispose() {
+    descriptionController.dispose();
+    amountController.dispose();
+    dateController.dispose();
+    super.dispose();
   }
 
   @override
@@ -448,50 +457,55 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                                 ],
                               ),
                               const SizedBox(height: 4),
-                              TextFormField(
-                                controller: dateController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Required field';
-                                  }
-                                  return null;
+                              StatefulBuilder(
+                                builder: (context, setState) {
+                                  return TextFormField(
+                                    controller: dateController,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Required field';
+                                      }
+                                      return null;
+                                    },
+
+                                    // readOnly: true,
+                                    style: const TextStyle(
+                                        fontSize: 24,
+                                        color: primaryWhite,
+                                        fontWeight: FontWeight.w700),
+                                    decoration: const InputDecoration(
+                                      suffixIcon: Icon(
+                                        Icons.date_range_rounded,
+                                        color: primaryWhite,
+                                      ),
+                                    ),
+                                    onTap: () async {
+                                      DateTime? pickedDate =
+                                          await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime(1950),
+                                              lastDate: DateTime(2100));
+
+                                      if (pickedDate != null) {
+                                        String formattedDate =
+                                            DateFormat('MM-dd-yyyy')
+                                                .format(pickedDate);
+
+                                        dateController.text = formattedDate;
+
+                                        String newDate = formattedDate;
+
+                                        print(newDate);
+
+                                        setState(() {
+                                          dateController.text = newDate;
+                                        });
+                                      }
+                                    },
+                                  );
                                 },
-
-                                // readOnly: true,
-                                style: const TextStyle(
-                                    fontSize: 24,
-                                    color: primaryWhite,
-                                    fontWeight: FontWeight.w700),
-                                decoration: const InputDecoration(
-                                  suffixIcon: Icon(
-                                    Icons.date_range_rounded,
-                                    color: primaryWhite,
-                                  ),
-                                ),
-                                onTap: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(1950),
-                                      lastDate: DateTime(2100));
-
-                                  if (pickedDate != null) {
-                                    String formattedDate =
-                                        DateFormat('MM-dd-yyyy')
-                                            .format(pickedDate);
-
-                                    dateController.text = formattedDate;
-
-                                    String newDate = formattedDate;
-
-                                    print(newDate);
-
-                                    setState(() {
-                                      dateController.text = newDate;
-                                    });
-                                  }
-                                },
-                              ),
+                              )
                             ],
                           ),
                         ],
@@ -519,39 +533,42 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  DropdownButton<String>(
-                                    value: categoryValue,
-                                    dropdownColor: mobileBackgroundColor,
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-                                    style: const TextStyle(
-                                        color: primaryGray, fontSize: 24),
-                                    onChanged: (String? newValue) {
-                                      // This is called when the user selects an item.
-                                      setState(() {
-                                        categoryValue = newValue!;
-                                      });
-                                      if (kDebugMode) {
-                                        print(categoryValue);
-                                      }
-                                    },
-                                    items: currentCategoryList
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value,
-                                            style:
-                                                const TextStyle(fontSize: 24)),
-                                      );
-                                    }).toList(),
-                                    isExpanded: true,
-                                  ),
-                                ],
-                              ),
-                            ),
+                            StatefulBuilder(builder: (context, setState) {
+                              return Expanded(
+                                child: Column(
+                                  children: [
+                                    DropdownButton<String>(
+                                      value: categoryValue,
+                                      dropdownColor: mobileBackgroundColor,
+                                      icon:
+                                          const Icon(Icons.keyboard_arrow_down),
+                                      style: const TextStyle(
+                                          color: primaryGray, fontSize: 24),
+                                      onChanged: (String? newValue) {
+                                        // This is called when the user selects an item.
+                                        setState(() {
+                                          categoryValue = newValue!;
+                                        });
+                                        if (kDebugMode) {
+                                          print(categoryValue);
+                                        }
+                                      },
+                                      items: currentCategoryList
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value,
+                                              style: const TextStyle(
+                                                  fontSize: 24)),
+                                        );
+                                      }).toList(),
+                                      isExpanded: true,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
                           ],
                         ),
                       ],
@@ -578,36 +595,39 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  DropdownButton<String>(
-                                    value: dropdownValue,
-                                    dropdownColor: mobileBackgroundColor,
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-                                    style: const TextStyle(
-                                        color: primaryGray, fontSize: 24),
-                                    onChanged: (String? newValue) {
-                                      // This is called when the user selects an item.
-                                      setState(() {
-                                        dropdownValue = newValue!;
-                                      });
-                                    },
-                                    items: paymentList
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value,
-                                            style:
-                                                const TextStyle(fontSize: 24)),
-                                      );
-                                    }).toList(),
-                                    isExpanded: true,
-                                  ),
-                                ],
-                              ),
-                            ),
+                            StatefulBuilder(builder: (context, setState) {
+                              return Expanded(
+                                child: Column(
+                                  children: [
+                                    DropdownButton<String>(
+                                      value: dropdownValue,
+                                      dropdownColor: mobileBackgroundColor,
+                                      icon:
+                                          const Icon(Icons.keyboard_arrow_down),
+                                      style: const TextStyle(
+                                          color: primaryGray, fontSize: 24),
+                                      onChanged: (String? newValue) {
+                                        // This is called when the user selects an item.
+                                        setState(() {
+                                          dropdownValue = newValue!;
+                                        });
+                                      },
+                                      items: paymentList
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value,
+                                              style: const TextStyle(
+                                                  fontSize: 24)),
+                                        );
+                                      }).toList(),
+                                      isExpanded: true,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            })
                           ],
                         ),
                       ],

@@ -118,12 +118,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           }
                         },
                       )),
-                      IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.edit,
-                            color: primaryGray,
-                          ))
                     ],
                   ),
                   const SizedBox(
@@ -216,26 +210,18 @@ class _ProfilePageState extends State<ProfilePage> {
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "email",
-                                      style: GoogleFonts.inter(
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .displaySmall,
-                                        fontSize: 16,
-                                        color: primaryWhite,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          Icons.edit,
-                                          color: primaryGray,
-                                        ))
-                                  ],
+                                Text(
+                                  "email",
+                                  style: GoogleFonts.inter(
+                                    textStyle: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall,
+                                    fontSize: 16,
+                                    color: primaryWhite,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 8,
                                 ),
                                 Flexible(
                                     child: FutureBuilder<
@@ -285,26 +271,17 @@ class _ProfilePageState extends State<ProfilePage> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "password",
-                                    style: GoogleFonts.inter(
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .displaySmall,
-                                      fontSize: 16,
-                                      color: primaryWhite,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.edit,
-                                        color: primaryGray,
-                                      ))
-                                ],
+                              Text(
+                                "password",
+                                style: GoogleFonts.inter(
+                                  textStyle:
+                                      Theme.of(context).textTheme.displaySmall,
+                                  fontSize: 16,
+                                  color: primaryWhite,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8,
                               ),
                               Text(
                                 "..........",

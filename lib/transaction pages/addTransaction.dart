@@ -190,8 +190,6 @@ class _MoneyInState extends State<MoneyIn> {
   FontWeight moneyInFontWeight = FontWeight.normal;
   FontWeight moneyOutFontWeight = FontWeight.normal;
 
-  int _currentButtonState = 1;
-
   void moneyButtonState(int state) {
     switch (state) {
       case 1:
