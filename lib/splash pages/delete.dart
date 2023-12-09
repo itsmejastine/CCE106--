@@ -3,7 +3,7 @@ import 'package:flutter_it14proj/components/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SplashDelete extends StatefulWidget {
-  const SplashDelete(BuildContext context, {super.key});
+  const SplashDelete({super.key});
 
   @override
   State<SplashDelete> createState() => _SplashDeleteState();

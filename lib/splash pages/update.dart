@@ -3,7 +3,7 @@ import 'package:flutter_it14proj/components/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SplashUpdate extends StatefulWidget {
-  const SplashUpdate(BuildContext context, {super.key});
+  const SplashUpdate({super.key});
 
   @override
   State<SplashUpdate> createState() => _SplashUpdateState();

@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
+import 'package:flutter_it14proj/components/navBar.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
+import 'package:flutter_it14proj/splash%20pages/delete.dart';
 import 'package:flutter_it14proj/transaction%20pages/updateTransaction.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -38,8 +40,26 @@ class _ViewTransactionState extends State<ViewTransaction> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      firestoreService.deleteTransaction('${widget.docID}');
-                      Navigator.pushNamed(context, 'transact');
+                      try {
+                        firestoreService.deleteTransaction('${widget.docID}');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SplashDelete()),
+                        );
+                        Future.delayed(const Duration(seconds: 3), () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NavBarPage(
+                                      initialIndex: 1,
+                                    )),
+                          );
+                        });
+                      } on Exception catch (e) {
+                        // TODO
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: primaryGreen,

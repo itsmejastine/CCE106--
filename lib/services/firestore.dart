@@ -52,20 +52,60 @@ class FirestoreService {
 
   //UPDATE
   Future<void> updateTransaction(String docID, String description,
-      double amount, String date, String category, String payment) {
-    return userTransaction.doc(docID).update({
+      double amount, String date, String category, String payment) async {
+    DocumentSnapshot previousTransaction = await userTransaction
+        .doc(currentUser!.email)
+        .collection('transaction')
+        .doc(docID)
+        .get();
+    double previousAmount = previousTransaction['amount'];
+    String type = previousTransaction['type'];
+
+    await userTransaction
+        .doc(currentUser!.email)
+        .collection('transaction')
+        .doc(docID)
+        .update({
       'description': description,
       'amount': amount,
       'date': date,
       'category': category,
       'payment': payment,
-      'balance': amount,
     });
+    double amountDifference = amount - previousAmount;
+    if (type == 'Income') {
+      await updateBalance(amountDifference);
+    } else {
+      await updateBalance(-amountDifference);
+    }
+
+    return;
   }
 
   //DELETE
-  Future<void> deleteTransaction(String docID) {
-    return userTransaction.doc(docID).delete();
+  Future<void> deleteTransaction(String docID) async {
+    DocumentSnapshot previousTransaction = await userTransaction
+        .doc(currentUser!.email)
+        .collection('transaction')
+        .doc(docID)
+        .get();
+
+    double amount = previousTransaction['amount'];
+    String type = previousTransaction['type'];
+
+    await userTransaction
+        .doc(currentUser!.email)
+        .collection('transaction')
+        .doc(docID)
+        .delete();
+
+    if (type == 'Income') {
+      await updateBalance(-amount);
+    } else {
+      await updateBalance(amount);
+    }
+
+    return;
   }
 
   //GET TOTAL INCOME
@@ -86,14 +126,14 @@ class FirestoreService {
     return totalIncome;
   }
 
-//GET TOTAL INCOME
+//GET TOTAL Expenses
   Future<double> totalExpenses() async {
     double totalExpense = 0.0;
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('Users')
         .doc(currentUser!.email)
         .collection('transaction')
-        .where('type', isEqualTo: 'Income')
+        .where('type', isEqualTo: 'Expenses')
         .get();
 
     for (var doc in querySnapshot.docs) {
@@ -102,6 +142,16 @@ class FirestoreService {
     }
 
     return totalExpense;
+  }
+
+  Future<double> userBalance() async {
+    DocumentSnapshot<Map<String, dynamic>> currentBalance =
+        await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(currentUser!.email)
+            .get();
+
+    return currentBalance.data()!['balance'];
   }
 
   updateBalance(double amount) async {

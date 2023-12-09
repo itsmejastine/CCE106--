@@ -86,8 +86,10 @@ class _MoneyInState extends State<MoneyIn> {
         descriptionController.clear();
         amountController.clear();
         dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
-        Navigator.pushNamed(context, 'splashAdd');
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Success()),
+        );
         Future.delayed(const Duration(seconds: 5), () {
           Navigator.pop(context);
           Navigator.push(
@@ -128,7 +130,10 @@ class _MoneyInState extends State<MoneyIn> {
         descriptionController.clear();
         amountController.clear();
         dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
-        Navigator.pushNamed(context, 'splashAdd');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Success()),
+        );
 
         Future.delayed(const Duration(seconds: 5), () {
           Navigator.pop(context);

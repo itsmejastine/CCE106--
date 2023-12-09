@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
+import 'package:flutter_it14proj/components/navBar.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
 import 'package:flutter_it14proj/splash%20pages/success.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -108,14 +109,23 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
         descriptionController.clear();
         amountController.clear();
         dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
-        Navigator.pushNamed(context, 'splashUpdate');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SplashUpdate()),
+        );
         Future.delayed(const Duration(seconds: 3), () {
-          Navigator.popAndPushNamed(context, 'transact');
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => NavBarPage(
+                      initialIndex: 1,
+                    )),
+          );
         });
       } on Exception catch (e) {
         Navigator.pop(context);
         print(e);
-        // TODO
       }
     }
   }

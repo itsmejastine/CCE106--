@@ -7,14 +7,13 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
 class Success extends StatefulWidget {
-  const Success(BuildContext context, {super.key});
+  const Success({super.key});
 
   @override
   State<Success> createState() => _SuccessState();
 }
 
 class _SuccessState extends State<Success> with SingleTickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

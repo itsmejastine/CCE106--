@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
+import 'package:flutter_it14proj/transaction%20pages/addTransaction.dart';
 import 'package:flutter_it14proj/transaction%20pages/viewTransaction.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,6 +18,7 @@ class _NewState extends State<New> {
   final FirestoreService firestoreService = FirestoreService();
   late Future<double> totalIncome;
   late Future<double> totalExpense;
+  late Future<double> currentBalance;
 
   User? currentUser = FirebaseAuth.instance.currentUser;
 
@@ -32,6 +34,7 @@ class _NewState extends State<New> {
     super.initState();
     totalIncome = firestoreService.totalIncome();
     totalExpense = firestoreService.totalExpenses();
+    currentBalance = firestoreService.userBalance();
   }
 
   @override
@@ -47,7 +50,11 @@ class _NewState extends State<New> {
                   width: 190,
                   child: FloatingActionButton.extended(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'moneyIn');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MoneyIn()),
+                      );
                     },
                     label: Text(
                       'Money In',
@@ -70,7 +77,11 @@ class _NewState extends State<New> {
                   width: 190,
                   child: FloatingActionButton.extended(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'moneyIn');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MoneyIn()),
+                      );
                     },
                     label: Text(
                       'Money Out',
@@ -128,53 +139,51 @@ class _NewState extends State<New> {
           ),
           const SizedBox(height: 16),
           Container(
-            padding: const EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  gradientYellow, // Green color at the top
-                  gradientGreen, //  color at the bottom
-                ],
+              padding: const EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    gradientYellow, // Green color at the top
+                    gradientGreen, //  color at the bottom
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(16.0),
               ),
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            alignment: Alignment.topLeft,
-            child: Flexible(
-                child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-              future: getUserDetails(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text(
-                    "Calculating ...",
-                    style: GoogleFonts.inter(
-                      textStyle: Theme.of(context).textTheme.displayMedium,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                      color: textGreen,
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text("Error: ${snapshot.error}");
-                } else if (snapshot.hasData) {
-                  Map<String, dynamic>? user = snapshot.data!.data();
+              alignment: Alignment.topLeft,
+              child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                future: getUserDetails(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text(
+                      "Calculating...",
+                      style: GoogleFonts.inter(
+                        textStyle: Theme.of(context).textTheme.displayMedium,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: textGreen,
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else if (snapshot.hasData) {
+                    Map<String, dynamic>? user = snapshot.data!.data();
 
-                  return Text(
-                    "Php  ${user!['balance']}",
-                    style: GoogleFonts.inter(
-                      textStyle: Theme.of(context).textTheme.displayMedium,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: textGreen,
-                    ),
-                  );
-                } else {
-                  return const Text("No data");
-                }
-              },
-            )),
-          ),
+                    return Text(
+                      "Php ${user!['balance']}",
+                      style: GoogleFonts.inter(
+                        textStyle: Theme.of(context).textTheme.displayMedium,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: textGreen,
+                      ),
+                    );
+                  } else {
+                    return const Text("No data");
+                  }
+                },
+              )),
 
           const SizedBox(height: 16),
           //CONTAINER WIDGET OF TOTAL INCOME AND EXPENSES//
@@ -323,8 +332,24 @@ class _NewState extends State<New> {
                   print(error);
                 }),
                 builder: ((context, snapshot) {
-                  //if there is data, get all
-                  if (snapshot.hasData) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data == null) {
+                    return Center(
+                        child: Text(
+                      'No Transactions Yet',
+                      style: GoogleFonts.inter(
+                        textStyle: Theme.of(context).textTheme.displaySmall,
+                        fontSize: 20,
+                        color: primaryWhite,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ));
+                  } else {
+                    //if there is data, get all
+
                     List transactionList = snapshot.data!.docs;
 
                     //display list
@@ -394,17 +419,6 @@ class _NewState extends State<New> {
                           ),
                         );
                       },
-                    );
-                  } //if there is no data
-                  else {
-                    return Text(
-                      'No transactions Yet..',
-                      style: GoogleFonts.inter(
-                        textStyle: Theme.of(context).textTheme.displaySmall,
-                        fontSize: 20,
-                        color: primaryWhite,
-                        fontWeight: FontWeight.w700,
-                      ),
                     );
                   }
                 })),
