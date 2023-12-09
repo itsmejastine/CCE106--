@@ -14,6 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _obscureText = true;
   //textEditing Controllers
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -169,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 40,
                   ),
                   TextFormField(
-                    obscureText: true,
+                    obscureText: _obscureText,
                     controller: passwordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -181,6 +182,15 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                         hintText: "password",
                         hintStyle: TextStyle(color: primaryGreen),
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            icon: Icon(_obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off)),
                         prefixIcon: const Icon(
                           Icons.lock,
                           color: primaryGreen,
@@ -188,9 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                         iconColor: primaryGreen,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
-                          borderSide: const BorderSide(
-                              color:
-                                  primaryGreen), //colors does not work for the border of the textField
+                          borderSide: const BorderSide(color: primaryGreen),
                         )),
                   )
                 ],

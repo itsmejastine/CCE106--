@@ -20,6 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _obscureText = true;
 
   //login user method
   void RegisterUser(BuildContext context) async {
@@ -70,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'email': userCredential.user!.email,
         'username': _userNameController.text,
         'balance': 0.0,
-        'transactions':{""}
+        'transactions': {""}
       });
     }
   }
@@ -210,6 +211,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 24,
                     ),
                     TextFormField(
+                      obscureText: _obscureText,
                       controller: _passwordController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -221,6 +223,15 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                           hintText: "Password",
                           hintStyle: TextStyle(color: primaryGreen),
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                              icon: Icon(_obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off)),
                           prefixIcon: const Icon(
                             Icons.lock,
                             color: primaryGreen,
@@ -237,6 +248,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 24,
                     ),
                     TextFormField(
+                      obscureText: _obscureText,
                       controller: _confirmPasswordController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -248,6 +260,15 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                           hintText: "Confirm Password",
                           hintStyle: TextStyle(color: primaryGreen),
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                              icon: Icon(_obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off)),
                           prefixIcon: const Icon(
                             Icons.lock,
                             color: primaryGreen,
