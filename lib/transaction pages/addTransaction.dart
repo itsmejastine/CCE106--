@@ -38,7 +38,8 @@ const List<String> expensesList = <String>[
 ];
 
 class MoneyIn extends StatefulWidget {
-  const MoneyIn({super.key});
+  final int buttonState;
+  const MoneyIn({super.key, required this.buttonState});
 
   @override
   State<MoneyIn> createState() => _MoneyInState();
@@ -186,8 +187,46 @@ class _MoneyInState extends State<MoneyIn> {
   bool isIncomeButtonVisible = true;
 
   //text state
-  FontWeight moneyInFontWeight = FontWeight.w700;
+  FontWeight moneyInFontWeight = FontWeight.normal;
   FontWeight moneyOutFontWeight = FontWeight.normal;
+
+  int _currentButtonState = 1;
+
+  void moneyButtonState(int state) {
+    switch (state) {
+      case 1:
+        setState(() {
+          moneyInButton = const Color.fromRGBO(21, 160, 39, 80);
+          moneyOutButton = mobileBackgroundColor;
+          moneyInText = primaryWhite;
+          moneyOutText = primaryGray;
+          moneyInBorder = primaryGreen;
+          moneyOutBorder = primaryGray;
+          moneyInFontWeight = FontWeight.bold;
+          moneyOutFontWeight = FontWeight.normal;
+          isExpenseButtonVisible = false;
+          isIncomeButtonVisible = true;
+          updateCategoryList(true);
+        });
+        break;
+      case 2:
+        setState(() {
+          moneyInButton = mobileBackgroundColor;
+          moneyOutButton = const Color.fromRGBO(255, 88, 88, 80);
+          moneyOutFontWeight = FontWeight.bold;
+          moneyInFontWeight = FontWeight.normal;
+          moneyOutText = primaryWhite;
+          moneyInText = primaryGray;
+          moneyInBorder = primaryGray;
+          moneyOutBorder = primaryRed;
+          isExpenseButtonVisible = !isExpenseButtonVisible;
+          isIncomeButtonVisible = !isIncomeButtonVisible;
+          updateCategoryList(false);
+        });
+        break;
+      default:
+    }
+  }
 
   //formKey
   final moneyformKey = GlobalKey<FormState>();
@@ -196,6 +235,7 @@ class _MoneyInState extends State<MoneyIn> {
   void initState() {
     super.initState();
     dateController.text = DateFormat('MM-dd-yyyy').format(DateTime.now());
+    moneyButtonState(widget.buttonState);
   }
 
   @override
@@ -222,19 +262,7 @@ class _MoneyInState extends State<MoneyIn> {
                     height: 54,
                     child: OutlinedButton(
                       onPressed: () {
-                        setState(() {
-                          moneyInButton = const Color.fromRGBO(21, 160, 39, 80);
-                          moneyOutButton = mobileBackgroundColor;
-                          moneyInText = primaryWhite;
-                          moneyOutText = primaryGray;
-                          moneyInBorder = primaryGreen;
-                          moneyOutBorder = primaryGray;
-                          moneyInFontWeight = FontWeight.bold;
-                          moneyOutFontWeight = FontWeight.normal;
-                          isExpenseButtonVisible = false;
-                          isIncomeButtonVisible = true;
-                          updateCategoryList(true);
-                        });
+                        moneyButtonState(1);
                       },
                       style: OutlinedButton.styleFrom(
                           backgroundColor: moneyInButton,
@@ -261,18 +289,7 @@ class _MoneyInState extends State<MoneyIn> {
                     child: OutlinedButton(
                       onPressed: () {
                         setState(() {
-                          moneyInButton = mobileBackgroundColor;
-                          moneyOutButton =
-                              const Color.fromRGBO(255, 88, 88, 80);
-                          moneyOutFontWeight = FontWeight.bold;
-                          moneyInFontWeight = FontWeight.normal;
-                          moneyOutText = primaryWhite;
-                          moneyInText = primaryGray;
-                          moneyInBorder = primaryGray;
-                          moneyOutBorder = primaryRed;
-                          isExpenseButtonVisible = !isExpenseButtonVisible;
-                          isIncomeButtonVisible = !isIncomeButtonVisible;
-                          updateCategoryList(false);
+                          moneyButtonState(2);
                         });
                       },
                       style: OutlinedButton.styleFrom(

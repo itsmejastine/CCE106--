@@ -53,7 +53,7 @@ class _NewState extends State<New> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MoneyIn()),
+                            builder: (context) => const MoneyIn(buttonState: 1,)),
                       );
                     },
                     label: Text(
@@ -80,7 +80,7 @@ class _NewState extends State<New> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MoneyIn()),
+                            builder: (context) => const MoneyIn(buttonState: 2,)),
                       );
                     },
                     label: Text(
