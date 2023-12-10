@@ -11,7 +11,7 @@ import 'package:flutter_it14proj/welcomePage.dart';
 class NavBarPage extends StatefulWidget {
   final int initialIndex;
 
-  NavBarPage({Key? key, required this.initialIndex}) : super(key: key);
+  const NavBarPage({Key? key, required this.initialIndex}) : super(key: key);
 
   @override
   State<NavBarPage> createState() => _NavBarPageState();

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
+import 'package:flutter_it14proj/services/firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -13,18 +14,55 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   //logout user method
-  void logUserOut() {
-    FirebaseAuth.instance.signOut();
+  void logout() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              backgroundColor: mobileBackgroundColor,
+              title: const Icon(
+                Icons.logout,
+                color: primaryRed,
+                size: 108,
+              ),
+              content: Text(
+                'Are you sure to leave your companion?',
+                style: GoogleFonts.inter(
+                  textStyle: Theme.of(context).textTheme.displayMedium,
+                  fontSize: 16,
+                  color: primaryWhite,
+                ),
+              ),
+              actionsAlignment: MainAxisAlignment.center,
+              actions: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryRed,
+                        foregroundColor: primaryWhite),
+                    child: const Text('Yes'),
+                  ),
+                ),
+                const Spacer(),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryGray,
+                        foregroundColor: primaryWhite),
+                    child: const Text("No, I'll stay"),
+                  ),
+                )
+              ]);
+        });
   }
 
-  User? currentUser = FirebaseAuth.instance.currentUser;
-
-  Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
-    return await FirebaseFirestore.instance
-        .collection("Users")
-        .doc(currentUser!.email)
-        .get();
-  }
+  final FirestoreService firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -34,25 +72,24 @@ class _ProfilePageState extends State<ProfilePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              //Logout Button
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Icon(Icons.logout, color: primaryRed),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  ElevatedButton(
-                    onPressed: logUserOut,
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: mobileBackgroundColor,
-                        foregroundColor: primaryRed),
-                    child: const Text("Logout",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Inter",
-                          fontSize: 16,
-                        )),
-                  ),
+                  ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                      ),
+                      onPressed: logout,
+                      icon: const Icon(
+                        Icons.exit_to_app,
+                        color: primaryRed,
+                      ),
+                      label: const Text(
+                        'Logout',
+                        style: TextStyle(color: primaryRed),
+                      )),
                 ],
               ),
               const SizedBox(
@@ -86,13 +123,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 8,
                   ),
+                  //USERNAME
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Flexible(
                           child: FutureBuilder<
                               DocumentSnapshot<Map<String, dynamic>>>(
-                        future: getUserDetails(),
+                        future: firestoreService.getUserDetails(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -123,6 +162,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 28,
                   ),
+
+                  //BALANCE
+
                   Container(
                     height: 64,
                     width: double.infinity,
@@ -153,7 +195,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Flexible(
                               child: FutureBuilder<
                                   DocumentSnapshot<Map<String, dynamic>>>(
-                            future: getUserDetails(),
+                            future: firestoreService.getUserDetails(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -197,6 +239,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 48,
                   ),
+
+                  //EMAIL
                   Column(
                     children: [
                       Container(
@@ -226,7 +270,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Flexible(
                                     child: FutureBuilder<
                                         DocumentSnapshot<Map<String, dynamic>>>(
-                                  future: getUserDetails(),
+                                  future: firestoreService.getUserDetails(),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
@@ -260,6 +304,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       const SizedBox(
                         height: 16,
                       ),
+
+                      //PASSWORD
+
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(

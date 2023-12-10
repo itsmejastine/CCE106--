@@ -27,22 +27,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'CashFlowCompanion',
+      title: 'Cash Flow Companion',
       theme: ThemeData(
         scaffoldBackgroundColor: mobileBackgroundColor,
         useMaterial3: true,
       ),
       home: const Authenticator(),
-      routes: {
-        'welcomePage': (context) => const WelcomePage(),
-        'profilePage': (context) => const ProfilePage(),
-        'navBarPage': (context) => NavBarPage(initialIndex: 0),
-        'viewGoal': (context) => const ViewGoal(),
-        'transact': (context) => const New(),
-        'splashUpdate': (context) => SplashUpdate(),
-        'splashAdd': (context) => Success(),
-        //add routes here
-      },
     );
   }
 }

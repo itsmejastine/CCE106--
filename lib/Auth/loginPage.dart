@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
             );
           });
 
-      //try sign in
+      // tries to login. If credentials are not found, an Alert Dialog wil pop up
       try {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
@@ -43,67 +43,36 @@ class _LoginPageState extends State<LoginPage> {
         //pop the loading circle
         Navigator.pop(context);
         //wrong email
-        if (e.code == 'invalid-email') {
-          //show error
-          wrongEmailMessage();
-        }
-        //wrong password
-        else if (e.code == 'invalid-login-credentials') {
-          //show error
-          wrongPasswordMessage();
-
-          //wrong credentials
-        }
+        errorMessage(e.code);
       }
     }
-  } //last loginUser
+  }
 
-  void wrongPasswordMessage() {
+// Alert Dialouge for the error message
+  void errorMessage(String error) {
     showDialog(
         context: context,
         builder: (context) {
-          return const AlertDialog(
+          return AlertDialog(
             backgroundColor: mobileBackgroundColor,
             title: Column(
               children: [
-                Icon(
+                const Icon(
                   Icons.error_outline,
                   color: primaryRed,
                   size: 90,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
-                Text('Wrong password', style: TextStyle(color: primaryWhite)),
+                Text(error, style: const TextStyle(color: primaryWhite)),
               ],
             ),
           );
         });
   }
 
-  void wrongEmailMessage() {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return const AlertDialog(
-            backgroundColor: mobileBackgroundColor,
-            title: Column(
-              children: [
-                Icon(
-                  Icons.error_outline,
-                  color: primaryRed,
-                  size: 90,
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Text('Incorrect Email', style: TextStyle(color: primaryWhite)),
-              ],
-            ),
-          );
-        });
-  }
-
+  //disposes evertthing inside the textfield when the pages exits.
   @override
   void dispose() {
     emailController.dispose();
@@ -142,6 +111,8 @@ class _LoginPageState extends State<LoginPage> {
               key: _formKey,
               child: Column(
                 children: [
+                  //EMAIL TEXTFORMFIELD
+
                   TextFormField(
                     controller: emailController,
                     validator: (value) {
@@ -150,10 +121,10 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
-                    style: TextStyle(color: primaryWhite),
+                    style: const TextStyle(color: primaryWhite),
                     decoration: InputDecoration(
                         hintText: "email",
-                        hintStyle: TextStyle(color: primaryGreen),
+                        hintStyle: const TextStyle(color: primaryGreen),
                         prefixIcon: const Icon(
                           Icons.mail,
                           color: primaryGreen,
@@ -169,6 +140,8 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 40,
                   ),
+                  //PASSWORD TEXTFORMFIELD
+
                   TextFormField(
                     obscureText: _obscureText,
                     controller: passwordController,
@@ -181,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: const TextStyle(color: primaryWhite),
                     decoration: InputDecoration(
                         hintText: "password",
-                        hintStyle: TextStyle(color: primaryGreen),
+                        hintStyle: const TextStyle(color: primaryGreen),
                         suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
@@ -207,6 +180,8 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 100,
             ),
+            // LOGIN BUTTON
+
             SizedBox(
               height: 48,
               width: 294,
@@ -225,6 +200,9 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 100,
             ),
+
+            // TEXT LINK TO NAVIGATE TO THE REGISTER PAGE
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -5,6 +5,7 @@ import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_borders/gradient_borders.dart';
+import 'package:gradient_icon/gradient_icon.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -15,14 +16,18 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  // TEXT EDITING CONTROLLERS
   final _userNameController = TextEditingController();
   final _emailRegController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+
+  //FOMR KEY
+
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
 
-  //login user method
+  //REGISTER USER
   void RegisterUser(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       showDialog(
@@ -40,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
         errorMessage('Password does not match');
         return;
       } else {
-        //try sign in
+        //try sign in and then at the same time create user in the firebase Authentication
         try {
           UserCredential? userCredential = await FirebaseAuth.instance
               .createUserWithEmailAndPassword(
@@ -76,7 +81,9 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  void errorMessage(String message) {
+// Alert dialog for the error message
+
+  void errorMessage(String error) {
     showDialog(
         context: context,
         builder: (context) {
@@ -84,15 +91,15 @@ class _RegisterPageState extends State<RegisterPage> {
             backgroundColor: mobileBackgroundColor,
             title: Column(
               children: [
-                Icon(
+                const Icon(
                   Icons.error_outline,
                   color: primaryRed,
                   size: 90,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
-                Text(message, style: TextStyle(color: primaryWhite)),
+                Text(error, style: const TextStyle(color: primaryWhite)),
               ],
             ),
           );
@@ -116,46 +123,36 @@ class _RegisterPageState extends State<RegisterPage> {
           padding: const EdgeInsets.fromLTRB(16, 36, 16, 36),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
-              Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadiusDirectional.circular(100),
-                  child: Container(
-                    height: 200,
-                    width: 200,
-                    decoration: BoxDecoration(
-                        border: const GradientBoxBorder(
-                      gradient: LinearGradient(
-                          colors: [gradientGreen, gradientYellow]),
-                      width: 20,
-                    )),
-                    child: Image.asset(
-                      '../lib/images/zzz.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+              const Center(
+                child: GradientIcon(
+                    icon: Icons.person,
+                    size: 200,
+                    gradient: LinearGradient(
+                        colors: [gradientGreen, gradientYellow])),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               Text(
-                'REGISTRATION',
+                'R E G I S T R A T I O N',
                 style: GoogleFonts.daysOne(
                   textStyle: Theme.of(context).textTheme.displayMedium,
                   fontSize: 32,
                   color: primaryWhite,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
+                    //USERNAME TEXTFORMFIELD
+
                     TextFormField(
                       controller: _userNameController,
                       validator: (value) {
@@ -164,10 +161,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                         return null;
                       },
-                      style: TextStyle(color: primaryWhite),
+                      style: const TextStyle(color: primaryWhite),
                       decoration: InputDecoration(
                           hintText: "Username",
-                          hintStyle: TextStyle(color: primaryGreen),
+                          hintStyle: const TextStyle(color: primaryGreen),
                           prefixIcon: const Icon(
                             Icons.person,
                             color: primaryGreen,
@@ -180,9 +177,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                     primaryGreen), //colors does not work for the border of the textField
                           )),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
+                    //EMAIL TEXTFORMFIELD
                     TextFormField(
                       controller: _emailRegController,
                       validator: (value) {
@@ -191,10 +189,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                         return null;
                       },
-                      style: TextStyle(color: primaryWhite),
+                      style: const TextStyle(color: primaryWhite),
                       decoration: InputDecoration(
                           hintText: "Email",
-                          hintStyle: TextStyle(color: primaryGreen),
+                          hintStyle: const TextStyle(color: primaryGreen),
                           prefixIcon: const Icon(
                             Icons.email,
                             color: primaryGreen,
@@ -207,9 +205,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                     primaryGreen), //colors does not work for the border of the textField
                           )),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
+
+                    //PASSWORD TEXTFORMFIELD
                     TextFormField(
                       obscureText: _obscureText,
                       controller: _passwordController,
@@ -222,7 +222,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       style: const TextStyle(color: primaryWhite),
                       decoration: InputDecoration(
                           hintText: "Password",
-                          hintStyle: TextStyle(color: primaryGreen),
+                          hintStyle: const TextStyle(color: primaryGreen),
                           suffixIcon: IconButton(
                               onPressed: () {
                                 setState(() {
@@ -244,9 +244,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                     primaryGreen), //colors does not work for the border of the textField
                           )),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
+                    //CONFIRM PASSWORD TEXTFORMFIELD
                     TextFormField(
                       obscureText: _obscureText,
                       controller: _confirmPasswordController,
@@ -259,7 +260,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       style: const TextStyle(color: primaryWhite),
                       decoration: InputDecoration(
                           hintText: "Confirm Password",
-                          hintStyle: TextStyle(color: primaryGreen),
+                          hintStyle: const TextStyle(color: primaryGreen),
                           suffixIcon: IconButton(
                               onPressed: () {
                                 setState(() {
@@ -287,6 +288,8 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 24,
               ),
+              //REGISTER BUTTON
+
               SizedBox(
                 height: 48,
                 width: 294,
@@ -305,6 +308,8 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 40,
               ),
+
+              // TEXT LINK TO NAVIGATE TO THE REGISTER PAGE
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
