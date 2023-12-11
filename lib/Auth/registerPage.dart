@@ -76,13 +76,13 @@ class _RegisterPageState extends State<RegisterPage> {
         'email': userCredential.user!.email,
         'username': _userNameController.text,
         'balance': 0.0,
+        'imageIndex': imageIndex,
         'transactions': {""}
       });
     }
   }
 
 // Alert dialog for the error message
-
   void errorMessage(String error) {
     showDialog(
         context: context,
@@ -102,6 +102,104 @@ class _RegisterPageState extends State<RegisterPage> {
                 Text(error, style: const TextStyle(color: primaryWhite)),
               ],
             ),
+          );
+        });
+  }
+
+  List<String> avatarImg = <String>[
+    "../lib/images/default.png",
+    "../lib/images/person01.png",
+    "../lib/images/person02.png",
+    "../lib/images/person03.png",
+    "../lib/images/person04.png",
+    "../lib/images/person05.png",
+    "../lib/images/person06.png",
+    "../lib/images/person07.png",
+  ];
+
+  int imageIndex = 0;
+
+  Widget avatar(String image, int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          imageIndex = index;
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: ClipRRect(
+          borderRadius: BorderRadiusDirectional.circular(50),
+          child: Container(
+            height: 80,
+            width: 80,
+            color: primaryWhite,
+            child: Image.asset(
+              image,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void chooseAvatar() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: mobileBackgroundColor,
+            title: Container(
+              child: Column(children: [
+                Row(
+                  children: [
+                    avatar(avatarImg[0], 0),
+                    avatar(avatarImg[1], 1),
+                    avatar(avatarImg[2], 2),
+                  ],
+                ),
+                Row(
+                  children: [
+                    avatar(avatarImg[3], 3),
+                    avatar(avatarImg[4], 4),
+                    avatar(avatarImg[5], 5),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    avatar(avatarImg[6], 6),
+                    avatar(avatarImg[7], 7),
+                  ],
+                )
+              ]),
+            ),
+            content: Text(
+              'Choose your Avatar',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.daysOne(
+                textStyle: Theme.of(context).textTheme.displayMedium,
+                fontSize: 16,
+                color: primaryWhite,
+              ),
+            ),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryGreen,
+                        foregroundColor: primaryWhite),
+                    child: const Text('Save'),
+                  ),
+                ],
+              ),
+            ],
           );
         });
   }
@@ -126,18 +224,64 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 24,
               ),
-              const Center(
-                child: GradientIcon(
-                    icon: Icons.person,
-                    size: 200,
-                    gradient: LinearGradient(
-                        colors: [gradientGreen, gradientYellow])),
-              ),
+              Center(
+                  child: SizedBox(
+                height: 230,
+                width: 230,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Container(
+                        height: 180,
+                        width: 180,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            gradient: const LinearGradient(colors: <Color>[
+                              Color(0xFF14A026),
+                              Color(0xFFF0DA11)
+                            ])),
+                      ),
+                    ),
+                    Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadiusDirectional.circular(80),
+                        child: Container(
+                          height: 150,
+                          width: 150,
+                          color: primaryWhite,
+                          child: Image.asset(
+                            avatarImg[imageIndex],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 40,
+                      bottom: 25,
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadiusDirectional.circular(25),
+                            color: primaryYellow),
+                        child: IconButton(
+                            onPressed: chooseAvatar,
+                            icon: const Icon(
+                              Icons.camera_alt_rounded,
+                              color: secondaryGreen,
+                              size: 20.0,
+                            )),
+                      ),
+                    )
+                  ],
+                ),
+              )),
               const SizedBox(
                 height: 24,
               ),
               Text(
-                'R E G I S T R A T I O N',
+                'REGISTRATION',
                 style: GoogleFonts.daysOne(
                   textStyle: Theme.of(context).textTheme.displayMedium,
                   fontSize: 32,

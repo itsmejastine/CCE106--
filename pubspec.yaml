@@ -71,6 +71,14 @@ flutter:
   assets:
     - lib/images/logo.png
     - lib/images/zzz.jpg
+    - lib/images/default.png
+    - lib/images/person01.png
+    - lib/images/person02.png
+    - lib/images/person03.png
+    - lib/images/person04.png
+    - lib/images/person05.png
+    - lib/images/person06.png
+    - lib/images/person07.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -13,6 +13,17 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  List<String> avatarImg = <String>[
+    "../lib/images/default.png",
+    "../lib/images/person01.png",
+    "../lib/images/person02.png",
+    "../lib/images/person03.png",
+    "../lib/images/person04.png",
+    "../lib/images/person05.png",
+    "../lib/images/person06.png",
+    "../lib/images/person07.png",
+  ];
+  int imageIndex = 0;
   //logout user method
   void logout() {
     showDialog(
@@ -39,6 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: ElevatedButton(
                     onPressed: () {
                       FirebaseAuth.instance.signOut();
+                      Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: primaryRed,
@@ -97,29 +109,64 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Column(
                 children: [
-                  Container(
-                    child: Center(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Container(
-                          height: 200,
-                          width: 200,
-                          decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment(-0.53, 0.85),
-                                  end: Alignment(0.53, -0.85),
-                                  colors: <Color>[
-                                Color(0xFF14A026),
-                                Color(0xFFF0DA11)
-                              ])),
-                          //   child: Image.asset(
-                          //    '../lib/image/pic.jpg',
-                          //    fit: BoxFit.fitWidth,
-                          //  ),
+                  Center(
+                      child: SizedBox(
+                    height: 230,
+                    width: 230,
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Container(
+                            height: 180,
+                            width: 180,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                gradient: const LinearGradient(colors: [
+                                  Color(0xFFF0DA11),
+                                  Color(0xFF14A026)
+                                ])),
+                          ),
                         ),
-                      ),
+                        Flexible(
+                            child: FutureBuilder<
+                                DocumentSnapshot<Map<String, dynamic>>>(
+                          future: firestoreService.getUserDetails(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            } else if (snapshot.hasError) {
+                              return Text("Error: ${snapshot.error}");
+                            } else if (snapshot.hasData) {
+                              Map<String, dynamic>? user =
+                                  snapshot.data!.data();
+
+                              int index = user!['imageIndex'];
+
+                              return Center(
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadiusDirectional.circular(80),
+                                  child: Container(
+                                    height: 150,
+                                    width: 150,
+                                    color: primaryWhite,
+                                    child: Image.asset(
+                                      avatarImg[index],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return const Text("No data");
+                            }
+                          },
+                        )),
+                      ],
                     ),
-                  ),
+                  )),
                   const SizedBox(
                     height: 8,
                   ),
@@ -147,7 +194,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: GoogleFonts.inter(
                                 textStyle:
                                     Theme.of(context).textTheme.displayMedium,
-                                fontSize: 24,
+                                fontSize: 28,
                                 fontWeight: FontWeight.w700,
                                 color: primaryWhite,
                               ),

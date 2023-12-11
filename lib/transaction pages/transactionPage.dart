@@ -6,6 +6,8 @@ import 'package:flutter_it14proj/services/firestore.dart';
 import 'package:flutter_it14proj/transaction%20pages/addTransaction.dart';
 import 'package:flutter_it14proj/transaction%20pages/viewTransaction.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gradient_icon/gradient_icon.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class New extends StatefulWidget {
   const New({super.key});
@@ -53,7 +55,9 @@ class _NewState extends State<New> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MoneyIn(buttonState: 1,)),
+                            builder: (context) => const MoneyIn(
+                                  buttonState: 1,
+                                )),
                       );
                     },
                     label: Text(
@@ -80,7 +84,9 @@ class _NewState extends State<New> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MoneyIn(buttonState: 2,)),
+                            builder: (context) => const MoneyIn(
+                                  buttonState: 2,
+                                )),
                       );
                     },
                     label: Text(
@@ -107,7 +113,15 @@ class _NewState extends State<New> {
             future: getUserDetails(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return Text(
+                  "...",
+                  style: GoogleFonts.inter(
+                    textStyle: Theme.of(context).textTheme.displayMedium,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: primaryWhite,
+                  ),
+                );
               } else if (snapshot.hasError) {
                 return Text("Error: ${snapshot.error}");
               } else if (snapshot.hasData) {
@@ -142,8 +156,8 @@ class _NewState extends State<New> {
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
                   colors: [
                     gradientYellow, // Green color at the top
                     gradientGreen, //  color at the bottom
@@ -254,7 +268,7 @@ class _NewState extends State<New> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Total Expenses',
                       style: TextStyle(
                         fontSize: 16,
@@ -262,7 +276,7 @@ class _NewState extends State<New> {
                         color: primaryWhite,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     FutureBuilder<double>(
                       future: totalExpense,
                       builder: (context, snapshot) {
@@ -336,16 +350,29 @@ class _NewState extends State<New> {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data == null) {
+                  } else if (!snapshot.hasData ||
+                      snapshot.data == null ||
+                      snapshot.data!.docs.isEmpty) {
                     return Center(
-                        child: Text(
-                      'No Transactions Yet',
-                      style: GoogleFonts.inter(
-                        textStyle: Theme.of(context).textTheme.displaySmall,
-                        fontSize: 20,
-                        color: primaryWhite,
-                        fontWeight: FontWeight.w700,
-                      ),
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const GradientIcon(
+                            icon: Icons.folder_open_rounded,
+                            size: 100,
+                            gradient: LinearGradient(
+                                colors: [gradientGreen, gradientYellow])),
+                        GradientText(
+                          'No Transactions Yet',
+                          style: GoogleFonts.inter(
+                            textStyle:
+                                Theme.of(context).textTheme.headlineMedium,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          colors: const [gradientGreen, gradientYellow],
+                        ),
+                      ],
                     ));
                   } else {
                     //if there is data, get all

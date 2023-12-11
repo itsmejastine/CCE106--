@@ -23,7 +23,6 @@ class _NavBarPageState extends State<NavBarPage> {
   final pages = [
     Home(),
     New(),
-    ViewGoal(),
     ProfilePage()
   ]; //change it to its corresponding page
 
@@ -56,11 +55,6 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.sync_alt),
             label: 'Transaction',
-            backgroundColor: mobileBackgroundColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payments),
-            label: 'Savings Goal',
             backgroundColor: mobileBackgroundColor,
           ),
           BottomNavigationBarItem(
