@@ -149,7 +149,6 @@ class _MoneyInState extends State<MoneyIn> {
       } on Exception catch (e) {
         Navigator.pop(context);
         errorMessage(e);
-        // TODO
       }
     }
   }
@@ -398,6 +397,8 @@ class _MoneyInState extends State<MoneyIn> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Required field';
+                            } else if (double.tryParse(value) == null) {
+                              return 'Please enter a valid number';
                             }
                             return null;
                           },
@@ -450,6 +451,7 @@ class _MoneyInState extends State<MoneyIn> {
                             if (value == null || value.isEmpty) {
                               return 'Required field';
                             }
+
                             return null;
                           },
                           readOnly: true,

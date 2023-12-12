@@ -409,6 +409,8 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Required field';
+                                  } else if (double.tryParse(value) == null) {
+                                    return 'Please enter a valid number';
                                   }
                                   return null;
                                 },
