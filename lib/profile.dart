@@ -321,8 +321,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return const Center(
-                                          child: CircularProgressIndicator());
+                                      return Text(
+                                        "Loading",
+                                        style: GoogleFonts.inter(
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .displayMedium,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: primaryWhite,
+                                        ),
+                                      );
                                     } else if (snapshot.hasError) {
                                       return Text("Error: ${snapshot.error}");
                                     } else if (snapshot.hasData) {
@@ -366,7 +375,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "password",
+                                "Number of Transactions",
                                 style: GoogleFonts.inter(
                                   textStyle:
                                       Theme.of(context).textTheme.displaySmall,
@@ -377,16 +386,44 @@ class _ProfilePageState extends State<ProfilePage> {
                               const SizedBox(
                                 height: 8,
                               ),
-                              Text(
-                                "..........",
-                                style: GoogleFonts.inter(
-                                  textStyle:
-                                      Theme.of(context).textTheme.displayMedium,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w700,
-                                  color: primaryWhite,
-                                ),
-                              ),
+                              Flexible(
+                                  child: FutureBuilder<int>(
+                                future: firestoreService.getTotalTransaction(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Text(
+                                      "Calculating...",
+                                      style: GoogleFonts.inter(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .displayMedium,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                        color: primaryWhite,
+                                      ),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Text("Error: ${snapshot.error}");
+                                  } else if (snapshot.hasData) {
+                                    int totalTransactions = snapshot.data!;
+
+                                    return Text(
+                                      "$totalTransactions",
+                                      style: GoogleFonts.inter(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .displayMedium,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                        color: primaryWhite,
+                                      ),
+                                    );
+                                  } else {
+                                    return const Text("No data");
+                                  }
+                                },
+                              )),
                             ],
                           ),
                         ),

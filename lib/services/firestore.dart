@@ -184,11 +184,22 @@ class FirestoreService {
       'balance': newBalance,
     });
   }
-  
-    Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
     return await FirebaseFirestore.instance
         .collection("Users")
         .doc(currentUser!.email)
         .get();
+  }
+
+  Future<int> getTotalTransaction() async {
+    QuerySnapshot<Map<String, dynamic>> totalTransactions =
+        await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(currentUser!.email)
+            .collection('transaction')
+            .get();
+
+    return totalTransactions.size;
   }
 }
