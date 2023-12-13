@@ -152,48 +152,48 @@ class _HomeState extends State<Home> {
               ],
             ),
             const SizedBox(height: 35),
-            Flexible(
-              child: StreamBuilder(
-                  stream:
-                      firestoreService.getTransactions().handleError((error) {
-                    print(error);
-                  }),
-                  builder: ((context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else if (!snapshot.hasData ||
-                        snapshot.data == null ||
-                        snapshot.data!.docs.isEmpty) {
-                      return Center(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const GradientIcon(
-                              icon: Icons.folder_open_rounded,
-                              size: 100,
-                              gradient: LinearGradient(
-                                  colors: [gradientGreen, gradientYellow])),
-                          GradientText(
-                            'No Transactions Yet',
-                            style: GoogleFonts.inter(
-                              textStyle:
-                                  Theme.of(context).textTheme.headlineMedium,
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            colors: const [gradientGreen, gradientYellow],
+            StreamBuilder(
+                stream: firestoreService.getTransactions().handleError((error) {
+                  print(error);
+                }),
+                builder: ((context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData ||
+                      snapshot.data == null ||
+                      snapshot.data!.docs.isEmpty) {
+                    return Center(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const GradientIcon(
+                            icon: Icons.folder_open_rounded,
+                            size: 100,
+                            gradient: LinearGradient(
+                                colors: [gradientGreen, gradientYellow])),
+                        GradientText(
+                          'No Transactions Yet',
+                          style: GoogleFonts.inter(
+                            textStyle:
+                                Theme.of(context).textTheme.headlineMedium,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ));
-                    } else {
-                      //if there is data, get all
+                          colors: const [gradientGreen, gradientYellow],
+                        ),
+                      ],
+                    ));
+                  } else {
+                    //if there is data, get all
 
-                      List transactionList = snapshot.data!.docs;
+                    List transactionList = snapshot.data!.docs;
 
-                      //display list
-                      return ListView.builder(
+                    //display list
+                    return SizedBox(
+                      height: 500,
+                      child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: transactionList.length,
                         itemBuilder: (context, index) {
@@ -218,51 +218,49 @@ class _HomeState extends State<Home> {
                             amountText = "+ Php $amount";
                           }
 
-                          return Expanded(
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ViewTransaction(docID: docID)));
-                              },
-                              title: Text(
-                                transactionText,
-                                style: GoogleFonts.inter(
-                                  textStyle:
-                                      Theme.of(context).textTheme.displaySmall,
-                                  fontSize: 16,
-                                  color: primaryWhite,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                          return ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ViewTransaction(docID: docID)));
+                            },
+                            title: Text(
+                              transactionText,
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 16,
+                                color: primaryWhite,
+                                fontWeight: FontWeight.w700,
                               ),
-                              subtitle: Text(
-                                dateText,
-                                style: GoogleFonts.inter(
-                                  textStyle:
-                                      Theme.of(context).textTheme.displaySmall,
-                                  fontSize: 12,
-                                  color: primaryWhite,
-                                ),
+                            ),
+                            subtitle: Text(
+                              dateText,
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 12,
+                                color: primaryWhite,
                               ),
-                              trailing: Text(
-                                amountText,
-                                style: GoogleFonts.inter(
-                                  textStyle:
-                                      Theme.of(context).textTheme.displaySmall,
-                                  fontSize: 16,
-                                  color: amountTextColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                            ),
+                            trailing: Text(
+                              amountText,
+                              style: GoogleFonts.inter(
+                                textStyle:
+                                    Theme.of(context).textTheme.displaySmall,
+                                fontSize: 16,
+                                color: amountTextColor,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           );
                         },
-                      );
-                    }
-                  })),
-            ),
+                      ),
+                    );
+                  }
+                })),
           ],
         ),
       ),

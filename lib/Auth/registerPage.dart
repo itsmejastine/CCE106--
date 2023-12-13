@@ -67,6 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  //Create User Credentials
   Future<void> createUserDocument(UserCredential? userCredential) async {
     if (userCredential != null && userCredential.user != null) {
       await FirebaseFirestore.instance
@@ -105,7 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
           );
         });
   }
-
+  //list of avatar images
   List<String> avatarImg = <String>[
     "../lib/images/default.png",
     "../lib/images/person01.png",
@@ -117,8 +118,11 @@ class _RegisterPageState extends State<RegisterPage> {
     "../lib/images/person07.png",
   ];
 
+  //image index
   int imageIndex = 0;
 
+  //UI of the image inside the Alert Dialog
+  //When clicked it changes the value imageIndex variable
   Widget avatar(String image, int index) {
     return GestureDetector(
       onTap: () {
@@ -144,6 +148,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  //Alert Dialog for choosing an Avatar Image
   void chooseAvatar() {
     showDialog(
         context: context,
@@ -204,6 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
         });
   }
 
+  //disposes anything inside the texformfield
   @override
   void dispose() {
     _userNameController.dispose();
@@ -224,6 +230,8 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 24,
               ),
+              
+              //Profile Picture
               Center(
                   child: SizedBox(
                 height: 230,
@@ -325,6 +333,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 24,
                     ),
                     //EMAIL TEXTFORMFIELD
+                    
                     TextFormField(
                       controller: _emailRegController,
                       validator: (value) {

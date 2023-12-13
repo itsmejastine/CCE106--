@@ -38,6 +38,7 @@ const List<String> expensesList = <String>[
 ];
 
 class MoneyIn extends StatefulWidget {
+  //requires a int value to whenever it is called
   final int buttonState;
   const MoneyIn({super.key, required this.buttonState});
 
@@ -73,6 +74,7 @@ class _MoneyInState extends State<MoneyIn> {
     });
   }
 
+  //Add Income Method
   void addIncome() {
     if (moneyformKey.currentState!.validate()) {
       String description = descriptionController.text;
@@ -96,7 +98,7 @@ class _MoneyInState extends State<MoneyIn> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => NavBarPage(
+                builder: (context) => const NavBarPage(
                       initialIndex: 1,
                     )),
           );
@@ -109,6 +111,7 @@ class _MoneyInState extends State<MoneyIn> {
     }
   }
 
+  //Add Expenses Method
   void addExpenses() {
     if (moneyformKey.currentState!.validate()) {
       showDialog(
@@ -141,7 +144,7 @@ class _MoneyInState extends State<MoneyIn> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => NavBarPage(
+                builder: (context) => const NavBarPage(
                       initialIndex: 1,
                     )),
           );
@@ -153,6 +156,7 @@ class _MoneyInState extends State<MoneyIn> {
     }
   }
 
+  //Error Message  Alert Dialog
   void errorMessage(error) {
     showDialog(
         context: context,
@@ -189,6 +193,7 @@ class _MoneyInState extends State<MoneyIn> {
   FontWeight moneyInFontWeight = FontWeight.normal;
   FontWeight moneyOutFontWeight = FontWeight.normal;
 
+  //chnages the UI of the Money IN/OUT button
   void moneyButtonState(int state) {
     switch (state) {
       case 1:
@@ -228,6 +233,7 @@ class _MoneyInState extends State<MoneyIn> {
   //formKey
   final moneyformKey = GlobalKey<FormState>();
 
+  //seeting the dateController to the date now, when the pages loads
   @override
   void initState() {
     super.initState();

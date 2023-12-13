@@ -24,6 +24,7 @@ class _NewState extends State<New> {
 
   User? currentUser = FirebaseAuth.instance.currentUser;
 
+  //gets the details of the user
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
     return await FirebaseFirestore.instance
         .collection("Users")
@@ -45,6 +46,7 @@ class _NewState extends State<New> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          //Foating buttton of Money in/out
           Expanded(
             child: Align(
                 alignment: Alignment.bottomRight,
@@ -108,6 +110,7 @@ class _NewState extends State<New> {
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          //getss and display the user Username
           Flexible(
               child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             future: getUserDetails(),
@@ -166,6 +169,7 @@ class _NewState extends State<New> {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               alignment: Alignment.topLeft,
+              //getss and display the user Balance
               child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                 future: getUserDetails(),
                 builder: (context, snapshot) {
@@ -224,6 +228,7 @@ class _NewState extends State<New> {
                       ),
                     ),
                     const SizedBox(height: 8),
+                    //getss and display the user Income
                     FutureBuilder<double>(
                       future: totalIncome,
                       builder: (context, snapshot) {
@@ -277,6 +282,7 @@ class _NewState extends State<New> {
                       ),
                     ),
                     const SizedBox(height: 8),
+                    //getss and display the user Expenses
                     FutureBuilder<double>(
                       future: totalExpense,
                       builder: (context, snapshot) {
@@ -312,75 +318,58 @@ class _NewState extends State<New> {
           ),
 
           const SizedBox(height: 40),
-          Row(
-            children: [
-              Text(
-                'Transactions',
-                style: GoogleFonts.inter(
-                  textStyle: Theme.of(context).textTheme.displaySmall,
-                  fontSize: 20,
-                  color: primaryWhite,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    'October 2023 v',
-                    style: GoogleFonts.inter(
-                      textStyle: Theme.of(context).textTheme.displaySmall,
-                      fontSize: 16,
-                      color: primaryWhite,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          Text(
+            'Transactions',
+            style: GoogleFonts.inter(
+              textStyle: Theme.of(context).textTheme.displaySmall,
+              fontSize: 20,
+              color: primaryWhite,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           const SizedBox(height: 20),
           //STREAMBUILDER
-          Flexible(
-            child: StreamBuilder(
-                stream: firestoreService.getTransactions().handleError((error) {
-                  print(error);
-                }),
-                builder: ((context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData ||
-                      snapshot.data == null ||
-                      snapshot.data!.docs.isEmpty) {
-                    return Center(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const GradientIcon(
-                            icon: Icons.folder_open_rounded,
-                            size: 100,
-                            gradient: LinearGradient(
-                                colors: [gradientGreen, gradientYellow])),
-                        GradientText(
-                          'No Transactions Yet',
-                          style: GoogleFonts.inter(
-                            textStyle:
-                                Theme.of(context).textTheme.headlineMedium,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          colors: const [gradientGreen, gradientYellow],
+          StreamBuilder(
+              stream: firestoreService.getTransactions().handleError((error) {
+                print(error);
+              }),
+              builder: ((context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData ||
+                    snapshot.data == null ||
+                    snapshot.data!.docs.isEmpty) {
+                  return Center(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const GradientIcon(
+                          icon: Icons.folder_open_rounded,
+                          size: 100,
+                          gradient: LinearGradient(
+                              colors: [gradientGreen, gradientYellow])),
+                      GradientText(
+                        'No Transactions Yet',
+                        style: GoogleFonts.inter(
+                          textStyle: Theme.of(context).textTheme.headlineMedium,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ));
-                  } else {
-                    //if there is data, get all
+                        colors: const [gradientGreen, gradientYellow],
+                      ),
+                    ],
+                  ));
+                } else {
+                  //if there is data, get all
 
-                    List transactionList = snapshot.data!.docs;
+                  List transactionList = snapshot.data!.docs;
 
-                    //display list
-                    return ListView.builder(
+                  //display list
+                  return SizedBox(
+                    height: 350,
+                    child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: transactionList.length,
                       itemBuilder: (context, index) {
@@ -446,10 +435,10 @@ class _NewState extends State<New> {
                           ),
                         );
                       },
-                    );
-                  }
-                })),
-          ),
+                    ),
+                  );
+                }
+              })),
         ]),
       ),
     );
