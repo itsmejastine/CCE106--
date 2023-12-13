@@ -2,13 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/Auth/authenticator.dart';
 import 'package:flutter_it14proj/components/colors.dart';
-import 'package:flutter_it14proj/splash%20pages/success.dart';
-import 'package:flutter_it14proj/splash%20pages/update.dart';
-import 'package:flutter_it14proj/components/navBar.dart';
-import 'package:flutter_it14proj/transaction%20pages/transactionPage.dart';
-import 'package:flutter_it14proj/profile.dart';
-import 'package:flutter_it14proj/viewGoal.dart';
-import 'package:flutter_it14proj/welcomePage.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {

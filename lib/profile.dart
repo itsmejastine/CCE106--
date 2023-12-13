@@ -361,7 +361,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 16,
                       ),
 
-                      //PASSWORD
+                      //Number of transactions
 
                       Container(
                         width: double.infinity,
@@ -387,6 +387,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 height: 8,
                               ),
                               Flexible(
+                                //gets the number of transactions made by the user
                                   child: FutureBuilder<int>(
                                 future: firestoreService.getTotalTransaction(),
                                 builder: (context, snapshot) {

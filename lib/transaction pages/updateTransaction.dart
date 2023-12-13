@@ -577,7 +577,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
                     ),
                     const SizedBox(height: 20),
 
-                    //-------- MOP -----------
+                    //-------- Mode of payment -----------
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

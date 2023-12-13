@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
-import 'package:flutter_it14proj/Auth/loginPage.dart';
 import 'package:flutter_it14proj/home.dart';
-import 'package:flutter_it14proj/transaction%20pages/addTransaction.dart';
 import 'package:flutter_it14proj/profile.dart';
 import 'package:flutter_it14proj/transaction%20pages/transactionPage.dart';
-import 'package:flutter_it14proj/viewGoal.dart';
-import 'package:flutter_it14proj/welcomePage.dart';
 
 class NavBarPage extends StatefulWidget {
   final int initialIndex;
@@ -21,9 +17,9 @@ class _NavBarPageState extends State<NavBarPage> {
   int _currentIndex = 0;
 
   final pages = [
-    Home(),
-    New(),
-    ProfilePage()
+    const Home(),
+    const New(),
+    const ProfilePage()
   ]; //change it to its corresponding page
 
   void _onItemTapped(int index) {
@@ -43,6 +39,7 @@ class _NavBarPageState extends State<NavBarPage> {
     return Scaffold(
       body: Center(
         child: pages[_currentIndex],
+        //displays the page accoriding the index assigned to it
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: mobileBackgroundColor,
