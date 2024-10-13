@@ -479,11 +479,8 @@ class _MoneyInState extends State<MoneyIn> {
                                 lastDate: DateTime(2100));
 
                             if (pickedDate != null) {
-                              print(pickedDate);
                               String formattedDate =
                                   DateFormat('MM-dd-yyyy').format(pickedDate);
-
-                              print(formattedDate);
 
                               setState(() {
                                 dateController.text = formattedDate;

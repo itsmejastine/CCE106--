@@ -27,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -72,10 +69,21 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCdQSgy5fEiAbQlq6U7YSyVw_o1dX0RpPM',
-    appId: '1:367381584209:ios:6418cdddd8a36aeb47db70',
+    appId: '1:367381584209:ios:a0096f7a31fabc2747db70',
     messagingSenderId: '367381584209',
     projectId: 'cashflowdb-d4f0f',
     storageBucket: 'cashflowdb-d4f0f.appspot.com',
-    iosBundleId: 'com.example.flutterIt14proj.RunnerTests',
+    iosBundleId: 'com.example.flutterIt14proj',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyA4oKr0PpjWgkljqC7T_hOXN7l2WnqDt6Y',
+    appId: '1:367381584209:web:c16f5b9a935239d047db70',
+    messagingSenderId: '367381584209',
+    projectId: 'cashflowdb-d4f0f',
+    authDomain: 'cashflowdb-d4f0f.firebaseapp.com',
+    storageBucket: 'cashflowdb-d4f0f.appspot.com',
+    measurementId: 'G-8GBKVY7TY8',
+  );
+
 }

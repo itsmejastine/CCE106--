@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
 import 'package:flutter_it14proj/components/navBar.dart';
 import 'package:flutter_it14proj/services/firestore.dart';
-import 'package:flutter_it14proj/splash%20pages/success.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -117,7 +116,7 @@ class _UpdateTransactionState extends State<UpdateTransaction> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => NavBarPage(
+                builder: (context) => const NavBarPage(
                       initialIndex: 1,
                     )),
           );

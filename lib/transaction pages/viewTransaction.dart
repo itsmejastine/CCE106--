@@ -52,12 +52,12 @@ class _ViewTransactionState extends State<ViewTransaction> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => NavBarPage(
+                                builder: (context) => const NavBarPage(
                                       initialIndex: 1,
                                     )),
                           );
                         });
-                      } on Exception catch (e) {
+                      } on Exception {
                         // TODO
                       }
                     },

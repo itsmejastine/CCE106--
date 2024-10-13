@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: primaryWhite,
                 ),
               ),
-              actionsAlignment: MainAxisAlignment.center,
+              actionsAlignment: MainAxisAlignment.center, 
               actions: [
                 Expanded(
                   child: ElevatedButton(

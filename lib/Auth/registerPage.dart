@@ -2,10 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it14proj/components/colors.dart';
-import 'package:flutter_it14proj/services/firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gradient_borders/gradient_borders.dart';
-import 'package:gradient_icon/gradient_icon.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -106,6 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
           );
         });
   }
+
   //list of avatar images
   List<String> avatarImg = <String>[
     "../lib/images/default.png",
@@ -230,7 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 24,
               ),
-              
+
               //Profile Picture
               Center(
                   child: SizedBox(
@@ -333,7 +331,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 24,
                     ),
                     //EMAIL TEXTFORMFIELD
-                    
+
                     TextFormField(
                       controller: _emailRegController,
                       validator: (value) {
